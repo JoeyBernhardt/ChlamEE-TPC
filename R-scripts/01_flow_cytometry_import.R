@@ -334,6 +334,37 @@ all_fcs2n %>%
 ggsave("figures/chlamee-fc-no-stain-g-wells-fsc-fl1.png", height = 8, width =12)
 
 
+
+# now count up the chlamys ------------------------------------------------
+
+chlamys <- all_fcs2n %>% 
+	# filter(fl1_a > 0, fl3_a > 0, fl4_a>0) %>% 
+	mutate(type = NA) %>% 
+	mutate(type = ifelse(fl1_a < 200000 & fl1_a > 1000 & fsc_a < 2900000 & fsc_a > 180000,  "algae", type))
+
+
+
+chlamy_counts <- chlamys %>% 
+	mutate(type = ifelse(is.na(type), "background", type)) %>% 
+	group_by(well, type) %>% 
+	tally()
+
+all_chlamy_counts <- left_join(chlamy_counts, all_treatments)
+
+
+# now plot the cell counts ------------------------------------------------
+
+all_chlamy_counts %>% 
+	filter(type == "algae") %>%
+	mutate(cell_concentration = n*40) %>% 
+	mutate(Ancestor_ID = ifelse(is.na(Ancestor_ID), Population, Ancestor_ID)) %>% 
+	mutate(Ancestor_ID = str_replace(Ancestor_ID, " ", "")) %>% 
+	ggplot(aes(x = unique_id, y = cell_concentration, color = Ancestor_ID)) + geom_point(size = 3) +
+	facet_wrap( ~ Treatment, scales = "free_x") + scale_color_viridis_d() +
+	theme(axis.text.x = element_text(angle = 75, hjust = 1)) + ylab("Cells per ml") 
+ggsave("figures/chlamEE-cell-count.png", width = 10, height = 12)
+
+
 all_fcs3 <- all_fcs2 %>% 
 	select(1:8) %>% 
 	filter(fl1_a > 5, fl3_a > 5)
