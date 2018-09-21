@@ -360,10 +360,16 @@ all_chlamy_counts %>%
 	mutate(Ancestor_ID = ifelse(is.na(Ancestor_ID), Population, Ancestor_ID)) %>% 
 	mutate(Ancestor_ID = str_replace(Ancestor_ID, " ", "")) %>% 
 	ggplot(aes(x = unique_id, y = cell_concentration, color = Ancestor_ID)) + geom_point(size = 3) +
-	facet_wrap( ~ Treatment, scales = "free_x") + scale_color_viridis_d() +
+	facet_wrap( ~ Treatment, scales = "free") + scale_color_viridis_d() +
 	theme(axis.text.x = element_text(angle = 75, hjust = 1)) + ylab("Cells per ml") 
-ggsave("figures/chlamEE-cell-count.png", width = 10, height = 12)
+ggsave("figures/chlamEE-cell-count-free-scales.png", width = 10, height = 12)
 
+
+chlamee_inoc_densities <- all_chlamy_counts %>% 
+	filter(type == "algae") %>%
+	mutate(cell_concentration = n*40)
+
+write_csv(chlamee_inoc_densities, "data-processed/chlamEE-inoc-densities-sep-19-2018.csv")
 
 all_fcs3 <- all_fcs2 %>% 
 	select(1:8) %>% 
