@@ -83,9 +83,9 @@ ggsave("figures/anc4-pilot-RFU-time.pdf", width = 8, height = 6)
 all_rfus3 %>% 
 	mutate(population_id = paste(plate, well, sep = "_")) %>% 
 	filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	filter(temperature > 20) %>% 
+	filter(temperature > 15) %>% 
 	mutate(Treatment = ifelse(is.na(Treatment), "COMBO", Treatment)) %>% 
-	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(alpha = 0.5, size = 2) +
+	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
 	geom_line() +
 	facet_wrap( ~ Treatment) + scale_color_viridis_d()
 
