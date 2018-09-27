@@ -78,3 +78,11 @@ filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>%
 	geom_line() +
 	facet_wrap( ~ temperature)
 ggsave("figures/anc4-pilot-RFU-time.pdf", width = 8, height = 6)
+
+all_rfus3 %>% 	
+	filter(plate %in% c(13, 16)) %>% 
+	mutate(Treatment = ifelse(is.na(Treatment), "COMBO", Treatment)) %>% 
+	ggplot(aes(x = date_time, y = RFU, color = Treatment, group = well)) + geom_point(alpha = 0.5, size = 2) +
+	geom_line() +
+	facet_wrap( ~ Treatment + plate)
+ggsave("figures/anc4-pilot-RFU-plate16-35degrees.pdf", width = 12, height = 6)
