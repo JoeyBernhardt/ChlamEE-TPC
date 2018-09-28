@@ -3,6 +3,11 @@ library(tidyverse)
 library(cowplot)
 library(readxl)
 library(janitor)
+library(lubridate)
+
+
+# read in general data ----------------------------------------------------
+
 
 plate_layout <- read_excel("data-general/plate-layout-anc4-2018-09-26.xlsx") %>% 
 	select(-population)
@@ -15,9 +20,11 @@ plate_key <- read_csv("data-general/anc4-pilot-plate-key.csv") %>%
 treatments <- read_excel("data-general/ChlamEE_Treatments.xlsx") %>% 
 	mutate(Population = as.character(Population))
 
+ 
 
+
+# read in RFU data --------------------------------------------------------
 RFU_files <- c(list.files("data-raw/anc4-pilot-september2018/anc4-pilot-2018-09-26", full.names = TRUE))
-
 RFU_files <- RFU_files[grepl(".xlsx", RFU_files)]
 
 names(RFU_files) <- RFU_files %>% 
@@ -51,8 +58,6 @@ plate2 <- left_join(plate_layout, color_key, by = "colour") %>%
 	rename(Population = population)
 
 
-
-
 all_treatments <- left_join(plate2, treatments, by = "Population") %>% 
 	unite(col = unique_id, well, Population, Ancestor_ID, Treatment, sep = "_", remove = FALSE) %>% 
 	mutate(well = str_to_upper(well))
@@ -67,7 +72,6 @@ all_rfus <- left_join(all_temp_RFU, all_treatments) %>%
 # ggsave("figures/anc4-pilot-RFU-2018-09-26.pdf", width = 14, height =8)
 
 
-library(lubridate)
 all_rfus2 <- all_rfus %>%
 	unite(col = date_time, Date, time, sep = " ") %>%
 	mutate(date_time = ymd_hms(date_time))
@@ -77,22 +81,44 @@ all_rfus3 <- left_join(all_rfus2, plate_key, by = "plate") %>%
 	mutate(Treatment = ifelse(colour == "blank", "COMBO", Treatment)) %>% 
 	mutate(Treatment = ifelse(colour == "wx", "Anc4", Treatment))
 
+
+
+# Plot! -------------------------------------------------------------------
+
+## RFU over time
+all_rfus3 %>% 
+	mutate(population_id = paste(plate, well, sep = "_")) %>% 
+	filter(!plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24", "2", "10", "15", "6"), "repeat", "single")) %>% 
+	filter(!is.na(temperature)) %>% 
+	# filter(temperature == 35) %>% 
+	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
+	geom_line() +
+	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+ggsave("figures/anc4-pilot-RFU-time-2018-09-28.pdf", width = 12, height = 10)
+
+
+all_rfus3 %>% 
+	mutate(population_id = paste(plate, well, sep = "_")) %>% 
+	# filter(!plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24"), "repeat", "single")) %>% 
+	filter(!is.na(temperature)) %>% 
+	# filter(round == "single") %>% 
+	filter(temperature > 16) %>% 
+	ggplot(aes(x = date_time, y = RFU, color = round, group = population_id)) + geom_point(size = 2) +
+	geom_line() +
+	facet_wrap( ~ temperature + Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+
+
 all_rfus3 %>% 	
-# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	# filter(temperature > 20) %>% 
+filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	filter(!is.na(temperature)) %>% 
+	filter(temperature > 16) %>% 
 	ggplot(aes(x = date_time, y = RFU, color = Treatment, group = well)) + geom_point(alpha = 0.5, size = 2) +
 	geom_line() +
 	facet_wrap( ~ temperature)
 ggsave("figures/anc4-pilot-RFU-time.pdf", width = 10, height = 6)
 
-all_rfus3 %>% 
-	mutate(population_id = paste(plate, well, sep = "_")) %>% 
-	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	filter(!is.na(temperature)) %>% 
-	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
-	geom_line() +
-	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
-ggsave("figures/anc4-pilot-RFU-time-2018-09-28.pdf", width = 12, height = 10)
 
 
 all_rfus3 %>% 
