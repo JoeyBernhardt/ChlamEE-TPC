@@ -106,6 +106,7 @@ all_rfus3 %>%
 	facet_wrap( ~ Treatment + temperature) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
 ggsave("figures/anc4-pilot-RFU-repeat-single.pdf", width = 15, height = 15)
 
+
 all_rfus3 %>% 	
 	# filter(plate %in% c(13, 16)) %>% 
 	mutate(Treatment = ifelse(is.na(Treatment), "COMBO", Treatment)) %>% 
