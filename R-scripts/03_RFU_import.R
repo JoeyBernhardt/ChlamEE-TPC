@@ -100,10 +100,11 @@ all_rfus3 %>%
 	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
 	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24"), "repeat", "single")) %>% 
 	filter(!is.na(temperature)) %>% 
-	filter(temperature == 30) %>% 
+	filter(temperature > 15) %>% 
 	ggplot(aes(x = date_time, y = RFU, color = round, group = population_id)) + geom_point(size = 2) +
 	geom_line() +
-	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+	facet_wrap( ~ Treatment + temperature) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+ggsave("figures/anc4-pilot-RFU-repeat-single.pdf", width = 15, height = 15)
 
 all_rfus3 %>% 	
 	# filter(plate %in% c(13, 16)) %>% 
