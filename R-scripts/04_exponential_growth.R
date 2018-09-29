@@ -35,7 +35,8 @@ growth2 %>%
 	# filter(temperature > 10) %>% 
 	ggplot(aes(x = temperature, y = estimate, color = Treatment, group = Treatment, fill = Treatment)) + geom_point() +
 	ylab("Exponential growth rate (per day)") + xlab("Temperature (°C)") + geom_smooth() +
-	geom_hline(yintercept = 0)
+	geom_hline(yintercept = 0) +
+	facet_wrap( ~ Treatment)
 ggsave("figures/anc4-TPC.pdf", width = 6, height = 4)
 
 
