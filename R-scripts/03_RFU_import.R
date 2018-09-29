@@ -88,10 +88,10 @@ all_rfus3 <- left_join(all_rfus2, plate_key, by = "plate") %>%
 ## RFU over time
 all_rfus3 %>% 
 	mutate(population_id = paste(plate, well, sep = "_")) %>% 
-	filter(!plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
 	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24", "2", "10", "15", "6"), "repeat", "single")) %>% 
 	filter(!is.na(temperature)) %>% 
-	# filter(temperature == 35) %>% 
+	filter(temperature == 30) %>% 
 	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
 	geom_line() +
 	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
