@@ -79,7 +79,11 @@ all_rfus2 <- all_rfus %>%
 all_rfus3 <- left_join(all_rfus2, plate_key, by = "plate") %>% 
 	mutate(temperature = as.numeric(temperature)) %>% 
 	mutate(Treatment = ifelse(colour == "blank", "COMBO", Treatment)) %>% 
-	mutate(Treatment = ifelse(colour == "wx", "Anc4", Treatment))
+	mutate(Treatment = ifelse(colour == "wx", "Anc4", Treatment)) %>% 
+	mutate(population_id = paste(plate, well, sep = "_")) %>% 
+	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24"), "repeat", "single")) %>% 
+	filter(!is.na(temperature)) 
 
 
 
@@ -87,15 +91,43 @@ all_rfus3 <- left_join(all_rfus2, plate_key, by = "plate") %>%
 
 ## RFU over time
 all_rfus3 %>% 
-	mutate(population_id = paste(plate, well, sep = "_")) %>% 
 	filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24", "2", "10", "15", "6"), "repeat", "single")) %>% 
-	filter(!is.na(temperature)) %>% 
-	filter(temperature == 30) %>% 
+	filter(temperature == 25) %>% 
+	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
+	# geom_line() +
+	facet_wrap( ~ temperature + Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+ggsave("figures/anc4-pilot-RFU-time-2018-09-28.pdf", width = 12, height = 10)
+
+
+
+repeat_rfus <- all_rfus3 %>% 
+	filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	mutate(keep = NA) %>% 
+	mutate(keep = case_when(temperature == 35 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
+							temperature == 30 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
+							temperature == 25 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
+							temperature == 20 ~ "yes",
+							temperature == 12 ~ "yes",
+							temperature == 8 ~ "yes",
+							TRUE ~ "no"))
+exponential_repeats <- repeat_rfus %>% 
+	filter(keep == "yes")
+
+write_csv(exponential_repeats, "data-processed/exponential_repeats_RFU_anc4.csv")
+	
+exponential_repeats %>%
 	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
 	geom_line() +
-	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
-ggsave("figures/anc4-pilot-RFU-time-2018-09-28.pdf", width = 12, height = 10)
+facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+	
+
+all_rfus3 %>% 
+	filter(temperature == 35) %>% 
+	filter(date_time < ymd_hms("2018-09-28 18:05:06")) %>% 
+	filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
+	# geom_line() +
+	facet_wrap( ~ temperature + Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
 
 
 all_rfus3 %>% 
@@ -107,8 +139,8 @@ all_rfus3 %>%
 	filter(temperature > 16) %>% 
 	ggplot(aes(x = date_time, y = RFU, color = round, group = population_id)) + geom_point(size = 2) +
 	geom_line() +
-	facet_wrap( ~ temperature + Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
-
+	facet_wrap( ~ temperature + Treatment, scales = "free") + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+ggsave("figures/anc4-pilot-RFU-time-single-repeat.pdf", width = 12, height = 10)
 
 all_rfus3 %>% 	
 filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
