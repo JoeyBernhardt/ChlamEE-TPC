@@ -32,8 +32,11 @@ growth2 <- left_join(growth_rates, cell_key, by = "population_id")
 
 growth2 %>% 
 	filter(!Treatment %in% c("COMBO", "P")) %>% 
+	# filter(temperature > 10) %>% 
 	ggplot(aes(x = temperature, y = estimate, color = Treatment, group = Treatment, fill = Treatment)) + geom_point() +
 	ylab("Exponential growth rate (per day)") + xlab("Temperature (°C)") + geom_smooth() +
 	geom_hline(yintercept = 0)
 ggsave("figures/anc4-TPC.pdf", width = 6, height = 4)
+
+
 
