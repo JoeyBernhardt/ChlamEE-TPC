@@ -92,10 +92,10 @@ all_rfus3 <- left_join(all_rfus2, plate_key, by = "plate") %>%
 ## RFU over time
 all_rfus3 %>% 
 	filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	filter(temperature == 25) %>% 
+	# filter(temperature == 12) %>% 
 	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
-	# geom_line() +
-	facet_wrap( ~ temperature + Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+	geom_line() +
+	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
 ggsave("figures/anc4-pilot-RFU-time-2018-09-28.pdf", width = 12, height = 10)
 
 
@@ -106,7 +106,7 @@ repeat_rfus <- all_rfus3 %>%
 	mutate(keep = case_when(temperature == 35 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
 							temperature == 30 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
 							temperature == 25 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
-							temperature == 20 ~ "yes",
+							temperature == 20 & date_time < ymd_hms("2018-09-30 09:38:11") ~ "yes",
 							temperature == 12 ~ "yes",
 							temperature == 8 ~ "yes",
 							TRUE ~ "no"))
