@@ -38,6 +38,6 @@ growth2 %>%
 	geom_hline(yintercept = 0) +
 	facet_wrap( ~ Treatment)
 ggsave("figures/anc4-TPC.pdf", width = 6, height = 4)
-
+ggsave("figures/anc4-TPC-together.pdf", width = 6, height = 4)
 
 
