@@ -99,6 +99,13 @@ all_rfus3 %>%
 	facet_wrap( ~ Treatment, scales = "free") + scale_color_viridis_d(name = "Temperature") + xlab("Date")
 ggsave("figures/anc4-pilot-RFU-time-2018-09-28.pdf", width = 12, height = 10)
 
+
+single_plates <- all_rfus3 %>% 
+	filter(!plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	distinct(plate, date_time, .keep_all = TRUE) 
+
+write_csv(single_plates, "data-processed/single-plates.csv")
+
 all_rfus3 %>% 
 	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
 	filter(temperature == 12) %>% 
