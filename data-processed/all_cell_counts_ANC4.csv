@@ -1,4 +1,62 @@
 plate,well,type,n,unique_id,replicate,colour,x,Population,Ancestor_ID,Treatment,Note
+1,A03,algae,7,NA,NA,NA,NA,NA,NA,NA,NA
+1,A04,algae,8,NA,NA,NA,NA,NA,NA,NA,NA
+1,B02,algae,1147,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,B03,algae,267,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,B05,algae,638,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,B06,algae,11,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+1,B07,algae,431,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,B08,algae,28,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+1,B09,algae,918,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,B10,algae,5,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+1,B11,algae,391,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,C02,algae,2261,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,C03,algae,1772,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,C04,algae,14,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+1,C05,algae,71,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+1,C07,algae,82,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+1,C08,algae,15,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+1,C10,algae,75,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,C11,algae,1,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+1,D02,algae,483,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,D03,algae,2156,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,D04,algae,2,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+1,D05,algae,31,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+1,D06,algae,63,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,D07,algae,17,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+1,D08,algae,1,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+1,D09,algae,68,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,D10,algae,243,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+1,D11,algae,68,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+1,E02,algae,3049,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,E03,algae,45,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+1,E04,algae,1921,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,E05,algae,43,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,E06,algae,143,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,E07,algae,649,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,E08,algae,79,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+1,E09,algae,1867,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,E10,algae,138,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+1,E11,algae,3,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+1,F02,algae,297,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+1,F03,algae,1,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+1,F04,algae,93,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+1,F05,algae,335,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,F06,algae,1154,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,F07,algae,16,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+1,F08,algae,1682,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+1,F09,algae,25,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+1,F10,algae,287,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,F11,algae,133,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,G02,algae,169,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+1,G03,algae,2793,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+1,G04,algae,496,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+1,G05,algae,109,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,G06,algae,158,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+1,G08,algae,73,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+1,G09,algae,105,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+1,G10,algae,3,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+1,G11,algae,196,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
 10,A03,algae,4,NA,NA,NA,NA,NA,NA,NA,NA
 10,A04,algae,8,NA,NA,NA,NA,NA,NA,NA,NA
 10,B02,algae,15645,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
@@ -182,6 +240,68 @@ plate,well,type,n,unique_id,replicate,colour,x,Population,Ancestor_ID,Treatment,
 14,G09,algae,1601,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
 14,G10,algae,2,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
 14,G11,algae,1553,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,A03,algae,8,NA,NA,NA,NA,NA,NA,NA,NA
+2,A04,algae,15,NA,NA,NA,NA,NA,NA,NA,NA
+2,B02,algae,714,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,B03,algae,67,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,B04,algae,4,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,B05,algae,252,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,B06,algae,4,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+2,B07,algae,816,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,B08,algae,3,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+2,B09,algae,1930,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,B10,algae,1,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,B11,algae,71,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,C02,algae,2219,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,C03,algae,1592,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,C04,algae,8,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+2,C05,algae,15,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,C06,algae,4,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,C07,algae,25,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,C08,algae,13,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+2,C09,algae,1,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,C10,algae,7,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,C11,algae,3,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,D02,algae,223,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,D03,algae,1215,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,D04,algae,4,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+2,D05,algae,4,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+2,D06,algae,3,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,D07,algae,5,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+2,D08,algae,1,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+2,D09,algae,8,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,D10,algae,38,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,D11,algae,4,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+2,E02,algae,149,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,E03,algae,13,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+2,E04,algae,960,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,E05,algae,3,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,E06,algae,63,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,E07,algae,1470,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,E08,algae,15,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,E09,algae,1212,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,E10,algae,9,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+2,E11,algae,3,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,F02,algae,55,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,F03,algae,3,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+2,F04,algae,20,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+2,F05,algae,122,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,F06,algae,571,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,F07,algae,8,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+2,F08,algae,601,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+2,F09,algae,13,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+2,F10,algae,128,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,F11,algae,10,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,G02,algae,19,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+2,G03,algae,1747,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+2,G04,algae,239,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+2,G05,algae,10,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,G06,algae,23,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+2,G07,algae,1,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+2,G08,algae,11,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+2,G09,algae,9,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+2,G10,algae,4,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+2,G11,algae,49,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
 25,A02,algae,1,NA,NA,NA,NA,NA,NA,NA,NA
 25,A03,algae,5,NA,NA,NA,NA,NA,NA,NA,NA
 25,B02,algae,27,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA

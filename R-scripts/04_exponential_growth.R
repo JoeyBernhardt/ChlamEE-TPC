@@ -1,9 +1,11 @@
 ### Fitting exponential growth
 library(lubridate)
 library(broom)
+library(tidyverse)
 
 
 exp_days <- read_csv("data-processed/exponential_repeats_RFU_anc4.csv")
+exp_cells <- read_csv("data-processed/all_temps_cells_RFU.csv")
 
 cell_days_c <- exp_days %>% 
 	mutate(start_time = min(date_time)) %>% 

@@ -1,12 +1,13 @@
 
 
-library(flowCore)
+
 library(tidyverse)
 library(cowplot)
 library(janitor)
 library(tidyverse)
 library(readxl)
 library(stringr)
+library(flowCore)
 
 #### read in plate layouts and treatments
 plate_layout <- read_excel("data-general/plate-layout-anc4-2018-09-26.xlsx") %>% 
@@ -15,7 +16,7 @@ color_key <- read_excel("data-general/colour-key-anc4-2018-09-26.xlsx")
 
 plate2 <- left_join(plate_layout, color_key, by = "colour") %>% 
 	mutate(well = str_to_upper(well)) %>% 
-	filter(!is.na(population)) %>% 
+	dplyr::filter(!is.na(population)) %>% 
 	rename(Population = population)
 
 treatments <- read_excel("data-general/ChlamEE_Treatments.xlsx") %>% 
