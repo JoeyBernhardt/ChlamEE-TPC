@@ -1,0 +1,482 @@
+plate,well,type,n,unique_id,replicate,colour,x,Population,Ancestor_ID,Treatment,Note
+10,A03,algae,4,NA,NA,NA,NA,NA,NA,NA,NA
+10,A04,algae,8,NA,NA,NA,NA,NA,NA,NA,NA
+10,B02,algae,15645,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,B03,algae,8847,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,B04,algae,5,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+10,B05,algae,10780,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,B06,algae,97,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+10,B07,algae,571,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,B08,algae,558,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+10,B09,algae,6932,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,B10,algae,13,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+10,B11,algae,9409,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,C02,algae,4522,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,C03,algae,5315,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,C04,algae,168,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+10,C05,algae,1205,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+10,C07,algae,1253,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+10,C08,algae,268,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+10,C09,algae,3,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+10,C10,algae,2048,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,C11,algae,6,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+10,D02,algae,7997,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,D03,algae,16861,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,D04,algae,11,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+10,D05,algae,858,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+10,D06,algae,501,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,D07,algae,141,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+10,D08,algae,1,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+10,D09,algae,1993,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,D10,algae,1431,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+10,D11,algae,405,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+10,E02,algae,7542,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,E03,algae,304,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+10,E04,algae,4370,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,E05,algae,693,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,E06,algae,3659,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,E07,algae,854,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,E08,algae,1243,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+10,E09,algae,8659,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,E10,algae,1470,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+10,E11,algae,1,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+10,F02,algae,1914,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+10,F03,algae,1,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+10,F04,algae,2692,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+10,F05,algae,7072,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,F06,algae,6860,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,F07,algae,442,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+10,F08,algae,14600,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+10,F09,algae,169,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+10,F10,algae,6579,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,F11,algae,1455,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,G02,algae,1355,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+10,G03,algae,5233,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+10,G04,algae,7132,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+10,G05,algae,2355,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,G06,algae,3193,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+10,G07,algae,6,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+10,G08,algae,1949,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+10,G09,algae,2391,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+10,G10,algae,8,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+10,G11,algae,1754,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,A03,algae,9,NA,NA,NA,NA,NA,NA,NA,NA
+13,A04,algae,2,NA,NA,NA,NA,NA,NA,NA,NA
+13,B02,algae,1788,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,B03,algae,80,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,B05,algae,1609,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,B06,algae,4,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+13,B07,algae,912,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,B08,algae,20,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+13,B09,algae,928,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,B10,algae,2,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+13,B11,algae,183,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,C02,algae,1587,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,C03,algae,1451,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,C04,algae,4,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+13,C05,algae,18,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,C06,algae,3,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+13,C07,algae,11,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,C08,algae,7,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+13,C09,algae,43,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+13,C10,algae,13,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,C11,algae,2,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+13,D02,algae,218,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,D03,algae,1452,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,D04,algae,1,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+13,D05,algae,12,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+13,D06,algae,5,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,D07,algae,3,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+13,D08,algae,1,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+13,D09,algae,3,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,D10,algae,11,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,D11,algae,7,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+13,E02,algae,1050,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,E03,algae,5,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+13,E04,algae,1285,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,E05,algae,4,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,E06,algae,16,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,E07,algae,198,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,E08,algae,8,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,E09,algae,1439,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,E10,algae,13,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+13,E11,algae,1,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+13,F02,algae,71,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,F03,algae,3,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+13,F04,algae,20,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+13,F05,algae,108,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,F06,algae,984,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,F07,algae,1,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+13,F08,algae,990,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+13,F09,algae,8,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+13,F10,algae,210,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,F11,algae,36,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,G02,algae,42,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+13,G03,algae,1089,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+13,G04,algae,121,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+13,G05,algae,11,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,G06,algae,40,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+13,G07,algae,5,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+13,G08,algae,14,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+13,G09,algae,11,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+13,G10,algae,5,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+13,G11,algae,29,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,A03,algae,1,NA,NA,NA,NA,NA,NA,NA,NA
+14,A04,algae,2,NA,NA,NA,NA,NA,NA,NA,NA
+14,B02,algae,15236,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,B03,algae,11552,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,B04,algae,2,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,B05,algae,12252,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,B06,algae,262,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+14,B07,algae,7881,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,B08,algae,883,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+14,B09,algae,10399,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,B10,algae,3,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,B11,algae,13362,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,C02,algae,11287,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,C03,algae,10349,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,C04,algae,478,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+14,C05,algae,2337,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,C06,algae,2,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,C07,algae,2065,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,C08,algae,524,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+14,C09,algae,4,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,C10,algae,662,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,C11,algae,2,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,D02,algae,10762,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,D03,algae,21044,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,D04,algae,2,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+14,D05,algae,1037,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+14,D06,algae,1355,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,D07,algae,924,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+14,D09,algae,1212,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,D10,algae,1538,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,D11,algae,712,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+14,E02,algae,10040,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,E03,algae,1400,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+14,E04,algae,15371,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,E05,algae,1691,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,E06,algae,6335,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,E07,algae,6000,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,E08,algae,1489,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,E09,algae,18058,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,E10,algae,1287,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+14,E11,algae,3,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,F02,algae,3065,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,F03,algae,1,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+14,F04,algae,2003,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+14,F05,algae,9188,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,F06,algae,11661,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,F07,algae,839,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+14,F08,algae,16726,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+14,F09,algae,723,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+14,F10,algae,11739,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,F11,algae,1118,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,G02,algae,1839,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+14,G03,algae,8709,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+14,G04,algae,7836,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+14,G05,algae,2350,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,G06,algae,2746,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+14,G07,algae,5,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+14,G08,algae,1737,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+14,G09,algae,1601,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+14,G10,algae,2,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+14,G11,algae,1553,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,A02,algae,1,NA,NA,NA,NA,NA,NA,NA,NA
+25,A03,algae,5,NA,NA,NA,NA,NA,NA,NA,NA
+25,B02,algae,27,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,B03,algae,11,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,B05,algae,9,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,B06,algae,1,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+25,B07,algae,1,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,B08,algae,1,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+25,B09,algae,10,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,B10,algae,3,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+25,B11,algae,10,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,C02,algae,7,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,C03,algae,6,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,C05,algae,1,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,C07,algae,1,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,C08,algae,1,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+25,C10,algae,1,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,D02,algae,11,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,D03,algae,20,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,D05,algae,5,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+25,D06,algae,1,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,D07,algae,3,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+25,D08,algae,2,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+25,D09,algae,1,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,D10,algae,2,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,D11,algae,1,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+25,E02,algae,14,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,E04,algae,18,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,E05,algae,1,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,E06,algae,19,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,E07,algae,15,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,E08,algae,3,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,E09,algae,21,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,E10,algae,5,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+25,E11,algae,1,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+25,F02,algae,2,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,F03,algae,1,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+25,F04,algae,3,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+25,F05,algae,8,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,F06,algae,26,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,F08,algae,19,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+25,F10,algae,17,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,F11,algae,1,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,G02,algae,7,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+25,G03,algae,15,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+25,G04,algae,13,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+25,G05,algae,4,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,G06,algae,3,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+25,G07,algae,1,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+25,G08,algae,3,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+25,G09,algae,4,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+25,G10,algae,6,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+25,G11,algae,5,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,A03,algae,4,NA,NA,NA,NA,NA,NA,NA,NA
+5,A04,algae,1,NA,NA,NA,NA,NA,NA,NA,NA
+5,A05,algae,11,NA,NA,NA,NA,NA,NA,NA,NA
+5,B02,algae,8857,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,B03,algae,4426,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,B04,algae,16,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,B05,algae,14040,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,B06,algae,280,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+5,B07,algae,5015,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,B08,algae,386,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+5,B09,algae,5062,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,B10,algae,28,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,B11,algae,4890,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,B12,algae,1,NA,NA,NA,NA,NA,NA,NA,NA
+5,C02,algae,8329,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,C03,algae,7935,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,C04,algae,340,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+5,C05,algae,356,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,C06,algae,5,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,C07,algae,339,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,C08,algae,181,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+5,C09,algae,4,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,C10,algae,990,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,C11,algae,5,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,D02,algae,6244,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,D03,algae,12499,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,D04,algae,43,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+5,D05,algae,565,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+5,D06,algae,392,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,D07,algae,306,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+5,D08,algae,3,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+5,D09,algae,1065,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,D10,algae,827,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,D11,algae,333,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+5,E02,algae,7295,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,E03,algae,276,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+5,E04,algae,10252,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,E05,algae,1159,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,E06,algae,3845,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,E07,algae,1173,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,E08,algae,722,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,E09,algae,12297,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,E10,algae,425,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+5,E11,algae,3,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,F02,algae,1186,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,F03,algae,3,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+5,F04,algae,637,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+5,F05,algae,5441,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,F06,algae,7130,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,F07,algae,186,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+5,F08,algae,13339,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+5,F09,algae,238,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+5,F10,algae,5213,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,F11,algae,937,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,G02,algae,24027,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+5,G03,algae,6757,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+5,G04,algae,4890,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+5,G05,algae,1022,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,G06,algae,773,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+5,G07,algae,14,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+5,G08,algae,315,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+5,G09,algae,917,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+5,G10,algae,5,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+5,G11,algae,1018,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,A03,algae,7,NA,NA,NA,NA,NA,NA,NA,NA
+6,A04,algae,2,NA,NA,NA,NA,NA,NA,NA,NA
+6,B02,algae,16088,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,B03,algae,7268,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,B04,algae,7,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,B05,algae,11338,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,B06,algae,576,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+6,B07,algae,2686,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,B08,algae,1110,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+6,B09,algae,14059,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,B10,algae,64,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,B11,algae,14548,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,C02,algae,7245,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,C03,algae,6475,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,C04,algae,222,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+6,C05,algae,1245,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,C06,algae,5,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,C07,algae,1167,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,C08,algae,794,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+6,C09,algae,6,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,C10,algae,1085,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,C11,algae,10,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,D02,algae,10290,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,D03,algae,18458,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,D04,algae,110,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+6,D05,algae,997,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+6,D06,algae,727,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,D07,algae,397,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+6,D08,algae,4,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+6,D09,algae,2085,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,D10,algae,3360,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,D11,algae,453,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+6,E02,algae,11648,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,E03,algae,792,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+6,E04,algae,10684,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,E05,algae,1281,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,E06,algae,5032,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,E07,algae,1796,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,E08,algae,2037,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,E09,algae,12653,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,E10,algae,2356,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+6,E11,algae,43,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,F02,algae,2565,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,F03,algae,5,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+6,F04,algae,1887,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+6,F05,algae,10114,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,F06,algae,10143,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,F07,algae,664,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+6,F08,algae,11696,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+6,F09,algae,1053,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+6,F10,algae,14160,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,F11,algae,728,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,G02,algae,2059,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+6,G03,algae,10478,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+6,G04,algae,12725,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+6,G05,algae,3430,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,G06,algae,3750,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+6,G07,algae,5,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+6,G08,algae,1294,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+6,G09,algae,2308,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+6,G10,algae,2,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+6,G11,algae,3189,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,A03,algae,5,NA,NA,NA,NA,NA,NA,NA,NA
+7,A04,algae,9,NA,NA,NA,NA,NA,NA,NA,NA
+7,B02,algae,9162,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,B03,algae,2157,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,B04,algae,8,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,B05,algae,5611,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,B06,algae,70,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+7,B07,algae,4658,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,B08,algae,288,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+7,B09,algae,6074,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,B10,algae,99,B10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,B11,algae,2400,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,C02,algae,3912,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,C03,algae,5040,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,C04,algae,49,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+7,C05,algae,4555,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,C06,algae,22,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,C07,algae,5215,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,C08,algae,70,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+7,C09,algae,6,C09_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,C10,algae,367,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,C11,algae,2,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,D02,algae,1268,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,D03,algae,11034,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,D04,algae,30,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+7,D05,algae,39,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+7,D06,algae,23,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,D07,algae,51,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+7,D08,algae,5,D08_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+7,D09,algae,155,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,D10,algae,3974,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,D11,algae,87,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+7,E02,algae,4806,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,E03,algae,54,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+7,E04,algae,11832,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,E05,algae,170,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,E06,algae,1357,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,E07,algae,3498,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,E08,algae,2616,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,E09,algae,13950,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,E10,algae,295,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+7,E11,algae,9,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,F02,algae,4495,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,F03,algae,10,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+7,F04,algae,89,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+7,F05,algae,1488,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,F06,algae,10420,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,F07,algae,93,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+7,F08,algae,10215,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+7,F09,algae,59,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+7,F10,algae,2193,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,F11,algae,131,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,G02,algae,54,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+7,G03,algae,5310,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+7,G04,algae,1407,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+7,G05,algae,116,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,G06,algae,3738,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+7,G07,algae,5,G07_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+7,G08,algae,53,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+7,G09,algae,124,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+7,G10,algae,3,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+7,G11,algae,3451,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,A03,algae,1,NA,NA,NA,NA,NA,NA,NA,NA
+9,B02,algae,14492,B02_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,B03,algae,4774,B03_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,B04,algae,2,B04_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+9,B05,algae,8703,B05_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,B06,algae,133,B06_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+9,B07,algae,807,B07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,B08,algae,469,B08_11_Anc 4_N,NA,yx,x,11,Anc 4,N,NA
+9,B09,algae,4158,B09_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,B11,algae,4720,B11_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,C02,algae,4447,C02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,C03,algae,4755,C03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,C04,algae,227,C04_24_Anc 4_C,NA,gx,x,24,Anc 4,C,NA
+9,C05,algae,657,C05_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,C06,algae,2,C06_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+9,C07,algae,835,C07_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,C08,algae,345,C08_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+9,C10,algae,853,C10_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,C11,algae,3,C11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+9,D02,algae,6602,D02_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,D03,algae,13030,D03_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,D04,algae,3,D04_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+9,D05,algae,203,D05_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+9,D06,algae,325,D06_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,D07,algae,180,D07_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+9,D09,algae,610,D09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,D10,algae,518,D10_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,D11,algae,262,D11_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+9,E02,algae,3923,E02_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,E03,algae,238,E03_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+9,E04,algae,12210,E04_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,E05,algae,626,E05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,E06,algae,2698,E06_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,E07,algae,1445,E07_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,E08,algae,459,E08_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,E09,algae,15831,E09_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,E10,algae,423,E10_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+9,E11,algae,1,E11_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+9,F02,algae,808,F02_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,F03,algae,1,F03_combo_NA_NA,NA,blank,NA,combo,NA,NA,NA
+9,F04,algae,463,F04_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+9,F05,algae,6921,F05_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,F06,algae,7795,F06_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,F07,algae,83,F07_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+9,F08,algae,12993,F08_35_Anc 4_BS,NA,w,NA,35,Anc 4,BS,NA
+9,F09,algae,165,F09_24_Anc 4_C,NA,gx,NA,24,Anc 4,C,NA
+9,F10,algae,5675,F10_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,F11,algae,924,F11_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,G02,algae,618,G02_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+9,G03,algae,2970,G03_15_Anc 4_S,NA,b,NA,15,Anc 4,S,NA
+9,G04,algae,4800,G04_21_Anc 4_B,NA,g,NA,21,Anc 4,B,NA
+9,G05,algae,448,G05_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,G06,algae,687,G06_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA
+9,G08,algae,521,G08_11_Anc 4_N,NA,yx,NA,11,Anc 4,N,NA
+9,G09,algae,479,G09_20_Anc 4_L,NA,bx,NA,20,Anc 4,L,NA
+9,G10,algae,2,G10_8_Anc 4_P,NA,y,NA,8,Anc 4,P,NA
+9,G11,algae,1062,G11_anc4_NA_NA,NA,wx,NA,anc4,NA,NA,NA

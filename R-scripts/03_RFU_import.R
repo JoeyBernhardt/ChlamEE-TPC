@@ -82,8 +82,8 @@ all_rfus3 <- left_join(all_rfus2, plate_key, by = "plate") %>%
 	mutate(Treatment = ifelse(colour == "wx", "Anc4", Treatment)) %>% 
 	mutate(population_id = paste(plate, well, sep = "_")) %>% 
 	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24"), "repeat", "single")) %>% 
-	filter(!is.na(temperature)) 
+	mutate(round = ifelse(plate %in% c("4", "8", "12", "16", "20", "24"), "repeat", "single"))
+	# filter(!is.na(temperature)) 
 
 
 
@@ -108,10 +108,12 @@ write_csv(single_plates, "data-processed/single-plates.csv")
 
 all_rfus3 %>% 
 	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
-	filter(temperature == 12) %>% 
-	ggplot(aes(x = date_time, y = RFU, color = round, group = population_id)) + geom_point(size = 2) +
+	dplyr::filter(temperature == 30) %>% 
+	# dplyr::filter(plate == 6) %>% View
+	ggplot(aes(x = date_time, y = RFU, color = plate, group = population_id)) + geom_point(size = 2) +
 	geom_line() +
 	facet_wrap( ~ Treatment) + scale_color_viridis_d(name = "Temperature") + xlab("Date")
+
 
 
 repeat_rfus <- all_rfus3 %>% 
@@ -128,6 +130,27 @@ exponential_repeats <- repeat_rfus %>%
 	filter(keep == "yes")
 
 write_csv(exponential_repeats, "data-processed/exponential_repeats_RFU_anc4.csv")
+
+
+all_repeat_rfus <- all_rfus3 %>% 
+	# filter(plate %in% c("4", "8", "12", "16", "20", "24")) %>% 
+	mutate(keep = NA) %>% 
+	mutate(keep = case_when(temperature == 35 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
+							temperature == 30 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
+							temperature == 25 & date_time < ymd_hms("2018-09-28 18:05:06") ~ "yes",
+							temperature == 20 & date_time < ymd_hms("2018-09-30 09:38:11") ~ "yes",
+							temperature == 12 ~ "yes",
+							temperature == 8 ~ "yes",
+							is.na(temperature) ~ "yes",
+							TRUE ~ "no"))
+exponential_all <- all_repeat_rfus %>% 
+	dplyr::filter(keep == "yes") %>% 
+	dplyr::filter(plate == 6) %>% 
+	mutate(inoculation = ifelse(date_time < ymd_hms("2018-09-27 04:05:06"), "yes", "no")) %>% View
+	mutate(state = case_when(plate == 25 ~ "time0",
+							 TRUE ~ "growth"))
+
+write_csv(exponential_all, "data-processed/all_exponential_rfus.csv")
 	
 exponential_repeats %>%
 	ggplot(aes(x = date_time, y = RFU, color = factor(temperature), group = population_id)) + geom_point(size = 2) +
