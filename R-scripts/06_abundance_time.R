@@ -5,7 +5,10 @@ library(lubridate)
 library(cowplot)
 
 rfus <- read_csv("data-processed/all_exponential_rfus.csv")
-cell_counts <- read_csv("data-processed/all_cell_counts_ANC4.csv") %>% 
+cell_counts <- read_csv("data-processed/cell_counts_flow_peaks.csv") %>% 
+	select(n, well, plate) %>% 
+	unite(col = population_id, plate, well, remove = FALSE)
+cell_counts_thresh <- read_csv("data-processed/all_cell_counts_ANC4.csv") %>% 
 	select(n, well, plate) %>% 
 	unite(col = population_id, plate, well, remove = FALSE)
 
@@ -36,7 +39,9 @@ all_rfu_counts2 %>%
 all_20 <- all_rfu_counts2 %>% 
 	mutate(temperature = ifelse(is.na(temperature), 20, temperature)) %>% 
 	dplyr::filter(temperature == 20) %>% 
-	ungroup() %>% 
+	ungroup()
+
+all_20 %>% 
 	select(Treatment, well, RFU, cells_per_ml, date_time) %>% 
 	gather(key = type, value = count, RFU, cells_per_ml) %>% 
 	ggplot(aes(x = date_time, y = count, group = well, color = type)) + geom_point()+
@@ -46,7 +51,9 @@ ggsave("figures/cells_and_RFU_20C.pdf", width = 10, height = 12)
 all_35 <- all_rfu_counts2 %>% 
 	mutate(temperature = ifelse(is.na(temperature), 35, temperature)) %>% 
 	dplyr::filter(temperature == 35) %>% 
-	ungroup() %>% 
+	ungroup() 
+
+all_35 %>% 
 	select(Treatment, well, RFU, cells_per_ml, date_time) %>% 
 	gather(key = type, value = count, RFU, cells_per_ml) %>% 
 	ggplot(aes(x = date_time, y = count, group = well, color = type)) + geom_point()+
@@ -56,7 +63,9 @@ ggsave("figures/cells_and_RFU_35C.pdf", width = 10, height = 12)
 all_30 <- all_rfu_counts2 %>% 
 mutate(temperature = ifelse(is.na(temperature), 30, temperature)) %>% 
 	dplyr::filter(temperature == 30) %>% 
-	ungroup() %>% 
+	ungroup() 
+
+all_30 %>% 
 	select(Treatment, well, RFU, cells_per_ml, date_time) %>% 
 	gather(key = type, value = count, RFU, cells_per_ml) %>% 
 	ggplot(aes(x = date_time, y = count, group = well, color = type)) + geom_point()+
@@ -66,7 +75,9 @@ ggsave("figures/cells_and_RFU_30C.pdf", width = 10, height = 12)
 all_25 <- all_rfu_counts2 %>% 
 	mutate(temperature = ifelse(is.na(temperature), 25, temperature)) %>% 
 	dplyr::filter(temperature == 25) %>% 
-	ungroup() %>% 
+	ungroup() 
+
+all_25 %>% 
 	select(Treatment, well, RFU, cells_per_ml, date_time) %>% 
 	gather(key = type, value = count, RFU, cells_per_ml) %>% 
 	ggplot(aes(x = date_time, y = count, group = well, color = well)) + geom_point()+
@@ -91,7 +102,28 @@ rfus %>%
 ggsave("figures/cells_and_RFU_25C.pdf", width = 10, height = 12)
 
 
-all_temps <- bind_rows(all_20, all_25, all_30, all_35)
+all_temps_stuart <- bind_rows(all_20, all_25, all_30, all_35)
+all_temps_thresh <- bind_rows(all_20, all_25, all_30, all_35)
+
+all_temps_stuart$approach <- "stuart"
+all_temps_thresh$approach <- "thresh"
+
+stuart2 <- all_temps_stuart %>% 
+	rename(stuart_count = cells_per_ml) %>% 
+	select(plate, well, temperature, stuart_count)
+
+thresh2 <- all_temps_thresh %>% 
+	rename(thresh_count = cells_per_ml)%>% 
+	select(plate, well, temperature, thresh_count)
+
+comparison <- left_join(stuart2, thresh2, by = c("well", "plate", "temperature"))
+
+comparison %>% 
+	# filter(plate == 25, well == "C07") %>% 
+	filter(stuart_count < 10000) %>% 
+	ggplot(aes(x = stuart_count, y = thresh_count)) + geom_point() +
+	geom_abline(slope = 1, intercept = 0) + geom_smooth()
+
 
 all_rfu_counts2 %>% 
 	# dplyr::filter(Treatment == "B") %>% 
@@ -100,7 +132,7 @@ all_rfu_counts2 %>%
 	geom_smooth(method = "lm")
 
 
-all_temps %>% 
+all_temps_stuart %>% 
 	ggplot(aes(x = date_time, y = cells_per_ml, group = well, color = Treatment)) + geom_point() +
 	geom_line() + facet_wrap( ~ temperature, scales = "free")
 ggsave("figures/cells_v_time.pdf", width = 10, height = 12)
@@ -114,7 +146,13 @@ write_csv(all_temps, "data-processed/all_temps_cells_RFU.csv")
 
 all_temps <- read_csv("data-processed/all_temps_cells_RFU.csv")
 
-all_temps %>% 
-	ggplot(aes(x = cells_per_ml, y = RFU, color = factor(temperature))) + geom_point() +
-	facet_wrap( ~ Treatment)
-ggsave("figures/RFU_v_cells.pdf", width = 10, height = 12)
+all_temps3 <- all_temps_stuart %>% 
+	mutate(start_time = min(date_time)) %>% 
+	mutate(days = interval(start_time, date_time)/ddays(1)) %>% 
+	mutate(days_round = round(days, digits = 1))
+
+	
+all_temps3 %>% 
+	ggplot(aes(x = cells_per_ml, y = RFU, color = factor(days_round), shape = factor(temperature))) + geom_point(size = 3) +
+	facet_wrap( ~ Treatment, scales = "free") + scale_color_viridis_d()
+ggsave("figures/RFU_v_cells_flowpeaks_facet_treatment.pdf", width = 16, height = 14)

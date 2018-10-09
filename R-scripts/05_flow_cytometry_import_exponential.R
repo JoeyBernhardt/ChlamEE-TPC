@@ -14,6 +14,9 @@ plate_layout <- read_excel("data-general/plate-layout-anc4-2018-09-26.xlsx") %>%
 	select(-population)
 color_key <- read_excel("data-general/colour-key-anc4-2018-09-26.xlsx")
 
+plate_key <- read_csv("data-general/anc4-pilot-plate-key.csv") %>% 
+	rename(plate = plate_id)
+
 plate2 <- left_join(plate_layout, color_key, by = "colour") %>% 
 	mutate(well = str_to_upper(well)) %>% 
 	dplyr::filter(!is.na(population)) %>% 
@@ -26,6 +29,12 @@ treatments <- read_excel("data-general/ChlamEE_Treatments.xlsx") %>%
 all_treatments <- left_join(plate2, treatments, by = "Population") %>% 
 	unite(col = unique_id, well, Population, Ancestor_ID, Treatment, sep = "_", remove = FALSE) %>% 
 	mutate(well = str_to_upper(well))
+
+read_fcs <- function(file) {
+	fcs_file <- as.data.frame((exprs(read.FCS(file)))) %>% 
+		clean_names()
+	
+}
 
 
 
@@ -205,6 +214,7 @@ all_plate_counts <- bind_rows(all_counts_25, all_counts_6, all_counts_5)
 
 write_csv(all_plate_counts, "data-processed/all_plate_cell_counts_cytometry.csv")
 
+### read in all the plates together
 
 fcs_files_all <- c(list.files("flow-cytometry-data/ANC4-experiment/",
 							  full.names = TRUE, pattern = ".fcs$", recursive = TRUE))
@@ -223,7 +233,9 @@ all_fcs2_all <- all_fcs_all %>%
 	mutate(plate = str_replace(plate, "_", "")) %>%
 	mutate(plate = str_replace(plate, "_", ""))
 
-all_fcs3_all <- all_fcs2_all%>% 
+write_csv(all_fcs2_all, "data-processed/anc4-particles.csv")
+
+all_fcs3_all <- all_fcs2_all %>% 
 	select(4:10) %>% 
 	dplyr::filter(fl1_a > 5, fl3_a > 5) %>% 
 	mutate(well = str_to_upper(well))
@@ -232,7 +244,40 @@ sorted_all <- all_fcs3_all %>%
 	mutate(type = NA) %>% 
 	mutate(type = ifelse(fl3_a > 1250, "algae", type)) 
 
-counts_all <- sorted_all %>% 
+all_sorted_all <- left_join(sorted_all, all_treatments, by = "well") %>% 
+	dplyr::filter(!grepl("A", well)) %>% 
+	mutate(plate = as.integer(plate))
+
+str(all_sorted_all)
+
+all_sorted2 <- left_join(all_sorted_all, plate_key, by = "plate")
+
+all_sorted2 %>% 
+	dplyr::filter(plate == 14) %>% 
+	# dplyr::filter(grepl("E", well)) %>% 
+	ggplot(aes(x=fsc_a, y=fl3_a, color = type)) + geom_point(alpha = 0.1, size = 0.5) + scale_y_log10() + scale_x_log10() +
+	facet_wrap( ~ well) +
+	# geom_vline(xintercept = 17000, color = "black") + 
+	geom_hline(yintercept = 1250, color = "black")
+ggsave("figures/ANC4-plate-14-fl3-fsc.png", width = 13, height = 10)
+
+all_sorted2 %>% 
+	dplyr::filter(plate == 1) %>% 
+	# dplyr::filter(grepl("E", well)) %>% 
+	ggplot(aes(x=fl1_a, y=fl3_a, color = type)) + geom_point(alpha = 0.1, size = 0.5) + scale_y_log10() + scale_x_log10() +
+	facet_wrap( ~ well) +
+	# geom_vline(xintercept = 17000, color = "black") + 
+	geom_hline(yintercept = 1250, color = "black")
+ggsave("figures/ANC4-plate-14-fl3-fl1.png", width = 13, height = 10)
+ggsave("figures/ANC4-plate-1-fl3-fl1.png", width = 13, height = 10)
+
+counts_all <- all_sorted2 %>% 
+	mutate(type = ifelse(is.na(type), "background", type)) %>% 
+	group_by(plate, well, type, temperature) %>% 
+	tally() %>% 
+	dplyr::filter(type == "algae")
+
+counts_all2 <- sorted_all %>% 
 	mutate(type = ifelse(is.na(type), "background", type)) %>% 
 	group_by(plate, well, type) %>% 
 	tally() %>% 
@@ -241,3 +286,60 @@ counts_all <- sorted_all %>%
 all_counts_all <- left_join(counts_all, all_treatments)
 write_csv(all_counts_all, "data-processed/all_cell_counts_ANC4.csv")
 
+
+library(flowPeaks)
+
+plate_14 <- all_fcs2_all %>% 
+	dplyr::filter(fl1_a >0, fl3_a>0, fl2_a >0, ssc_a>0) %>% 
+	dplyr::filter(plate == 14) %>% 
+	select(well, fl1_a, fl3_a, fl2_a, fsc_a, ssc_a) %>% 
+	# dplyr::filter(well == "B02") %>%
+	mutate(fl1_a = log(fl1_a)) %>% 
+	mutate(fl3_a = log(fl3_a)) %>% 
+	mutate(fl2_a = log(fl2_a)) %>% 
+	mutate(fsc_a = log(fsc_a))%>% 
+	mutate(ssc_a = log(ssc_a)) 
+
+plate_14_B02 <- all_fcs2_all %>% 
+	dplyr::filter(fl1_a >0, fl3_a>0, fl2_a >0, ssc_a>0) %>% 
+	dplyr::filter(plate == 14) %>% 
+	select(well, fl1_a, fl3_a, fl2_a, fsc_a, ssc_a) %>% 
+	dplyr::filter(well == "B02") %>%
+	mutate(fl1_a = log(fl1_a)) %>% 
+	mutate(fl3_a = log(fl3_a)) %>% 
+	mutate(fl2_a = log(fl2_a)) %>% 
+	mutate(fsc_a = log(fsc_a))%>% 
+	mutate(ssc_a = log(ssc_a)) 
+
+plate_13 <- all_fcs2_all %>% 
+	dplyr::filter(fl1_a >0, fl3_a>0, fl2_a >0, ssc_a>0) %>% 
+	dplyr::filter(plate == 13) %>% 
+	select(well, fl1_a, fl3_a, fl2_a, fsc_a, ssc_a) %>% 
+	# dplyr::filter(well == "B02") %>%
+	mutate(fl1_a = log(fl1_a)) %>% 
+	mutate(fl3_a = log(fl3_a)) %>% 
+	mutate(fl2_a = log(fl2_a)) %>% 
+	mutate(fsc_a = log(fsc_a)) %>% 
+	mutate(ssc_a = log(ssc_a)) 
+
+	
+
+fp <- flowPeaks(plate_14[,c(2:6)])
+plot(fp, idx = c(1, 2))
+
+print.flowPeaks(fp)
+
+plot.flowPeaks
+str(fp)
+summary(fp)
+fp$info
+summary(fp$cluster.id)
+unique(fp$peaks.cluster)
+unique(fp$kmeans.cluster)
+
+View(as.data.frame(fp$peaks.cluster))
+
+plate_14_B02_class <- assign.flowPeaks(fp, plate_14_B02[,c(2:6)])
+summary(plate_14_B02_class)
+unique(plate_14_B02_class)
+table(plate_14_B02_class)
