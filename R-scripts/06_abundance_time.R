@@ -151,8 +151,12 @@ all_temps3 <- all_temps_stuart %>%
 	mutate(days = interval(start_time, date_time)/ddays(1)) %>% 
 	mutate(days_round = round(days, digits = 1))
 
+
+### sum of red fluorescence vs. cell count
 	
 all_temps3 %>% 
-	ggplot(aes(x = cells_per_ml, y = RFU, color = factor(days_round), shape = factor(temperature))) + geom_point(size = 3) +
+	filter(cells_per_ml < 10000) %>% 
+	ggplot(aes(x = cells_per_ml, y = RFU, color = factor(days_round), shape = factor(temperature))) +
+	geom_point(size = 3) +
 	facet_wrap( ~ Treatment, scales = "free") + scale_color_viridis_d()
-ggsave("figures/RFU_v_cells_flowpeaks_facet_treatment.pdf", width = 16, height = 14)
+ggsave("figures/RFU_v_cells_flowpeaks_less_than_10000.pdf", width = 6, height = 4)
