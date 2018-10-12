@@ -70,17 +70,23 @@ inoc_densities <- all_rfus2 %>%
 	mutate(date_time = ymd_hms("2018-10-10 20:33:46"))
 
 inoc10 <- inoc_densities %>% 
-	mutate(temperature = 10)
+	mutate(temperature = 10) %>% 
+	mutate(plate = 4)
 inoc16 <- inoc_densities %>% 
-	mutate(temperature = 16)
+	mutate(temperature = 16)%>% 
+	mutate(plate = 8)
 inoc22 <- inoc_densities %>% 
-	mutate(temperature = 22)
+	mutate(temperature = 22) %>% 
+	mutate(plate = 12)
 inoc28 <- inoc_densities %>% 
-	mutate(temperature = 28)
+	mutate(temperature = 28) %>% 
+	mutate(plate = 16)
 inoc34 <- inoc_densities %>% 
-	mutate(temperature = 34)
+	mutate(temperature = 34) %>% 
+	mutate(plate = 20)
 inoc40 <- inoc_densities %>% 
-	mutate(temperature = 40)
+	mutate(temperature = 40) %>% 
+	mutate(plate = 24)
 all_inocs <- bind_rows(inoc10, inoc16, inoc22, inoc28, inoc34, inoc40)
 
 all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>% 
@@ -91,12 +97,12 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 
 
 all_rfus3 %>% 
-	# filter(temperature == 28) %>% 
-	filter(round == "repeat") %>% 
 	filter(temperature == 16) %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	# filter(round == "repeat") %>% 
+	# filter(population == 1) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(plate), group = well_plate)) +
 	geom_point(size = 3) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
-	facet_wrap( ~ population) + geom_line()
+	facet_wrap( ~ population, scales = "free") + geom_line()
 ggsave("figures/globe-chlamy-RFU-time.pdf", width = 12, height = 10)
 
 
