@@ -34,18 +34,6 @@ exponential_tpc <- function(a, b, z, w, temp, days) {
 	
 }
 
-trydata <- rfu2 %>% 
-	select(population, RFU, days, temp)
-
-
-fit_mult <- nlsLoop(RFU ~ exponential_tpc(a, b, z, w, temp, days),
-					 data = data.frame(trydata),
-					 tries = 500,
-					id_col = population,
-					 supp_errors = 'N',
-					 na.action = na.omit,
-					param_bds = c(0, 40, 0, 80, -0.3, 0.7, 0, 0.15))
-
 
 ##cell_density ~ 800 * exp(r*days)
 
@@ -71,6 +59,7 @@ fit_growth <- function(df){
 
 
 df_split <- rfu2 %>% 
+	filter(!is.na(RFU)) %>% 
 	split(.$population)
 
 output <- df_split %>%
@@ -113,10 +102,100 @@ all_preds %>%
 
 ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
 
-results <- output %>% 
-	filter(df.residual > 5) %>%
-	top_n(n = -1, wt = AIC)
 
+
+# bootstrapping -----------------------------------------------------------
+
+df <- rfu2 %>% 
+	filter(population == 3, !is.na(RFU))
+
+df$RFU[[1]]
+
+fit1 <- nlsLM(RFU ~  8 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+				 data= df,  
+				 start= list(z= 30,w= 25,a= 0.2, b= 0.1),
+				 lower = c(z = 0, w= 0, a = -0.2, b = 0),
+				 upper = c(z = 45, w= 70,a =  3, b = 1),
+				 control = nls.control(maxiter=1024, minFactor=1/204800000))
+summary(fit1)
+class(fit1)
+coef(fit1)
+confint2(fit1)
+best_fit_c <- coef(fit1)
+nls_boot_c <- nlsBoot(fit1, niter = 1000)
+nls_boot_coefs_c <- as_data_frame(nls_boot_c$coefboot)
+ctpc <- as_data_frame(best_fit_c) %>% 
+	rownames_to_column(.) %>% 
+	spread(key = rowname, value = value)
+
+prediction_function <- function(df) {
+	tpc <-function(x){
+		res<-(df$a[[1]]*exp(df$b[[1]]*x)*(1-((x-df$z[[1]])/(df$w[[1]]/2))^2))
+		res
+	}
+	
+	pred <- function(x) {
+		y <- tpc(x)
+	}
+	
+	x <- seq(0, 50, by = 0.1)
+	
+	preds <- sapply(x, pred)
+	preds <- data.frame(x, preds) %>% 
+		rename(temperature = x, 
+			   growth = preds)
+}
+
+
+bs_split <- nls_boot_coefs_c %>%
+	mutate(replicate = rownames(.)) %>% 
+	split(.$replicate)
+
+all_preds_bs <- bs_split %>% 
+	map_df(prediction_function, .id = "replicate")
+
+limits_c <- all_preds_bs %>% 
+	group_by(temperature) %>% 
+	summarise(q2.5=quantile(growth, probs=0.025),
+			  q97.5=quantile(growth, probs=0.975),
+			  mean = mean(growth)) 
+
+limits_c3 <- all_preds_bs %>% 
+	group_by(temperature) %>% 
+	summarise(q2.5=quantile(growth, probs=0.025),
+			  q97.5=quantile(growth, probs=0.975),
+			  mean = mean(growth)) 
+
+
+p <- ggplot(data = data.frame(x = 0), mapping = aes(x = x))
+p +
+# geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 1)) + 
+	# geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA),
+	# 			data = limits_c, fill = "orange", alpha = 0.5) +
+	geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 3)) + 
+	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA),
+				data = limits_c3, fill = "orange", alpha = 0.5) +
+	coord_cartesian(ylim = c(0, 3), xlim = c(0, 50)) +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
+
+
+
+p <- ggplot(data = data.frame(x = 0), mapping = aes(x = x))
+p + 
+	# stat_function(fun = tpc_c, color = "green", size = 1) +
+	geom_line(aes(x = temperature, y = growth, group = replicate), color = "cadetblue", data = all_preds_c, alpha = 0.2) +
+	stat_function(fun = ctpc, color = "black", size = 1) +
+	stat_function(fun = vtpc, color = "orange", size = 1) +
+	# # geom_line(aes(x = temperature, y = growth, group = replicate), color = "orange", data = all_preds_v, alpha = 0.1) +
+	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA), data = limits_v, fill = "orange", alpha = 0.5) +
+	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA), data = limits_c, fill = "cadetblue", alpha = 0.5) +
+	
+
+
+
+
+
+# other stuff -------------------------------------------------------------
 
 
 fitc1 <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
