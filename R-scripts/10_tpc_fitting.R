@@ -3,73 +3,48 @@ library(minpack.lm)
 library(broom)
 library(nlstools)
 library(nls.multstart)
+library(tidyverse)
+library(cowplot)
 
 rfu <- read_csv("data-processed/globe-chlamy-exponential-RFU-time.csv")
 
+rfu2 <- rfu %>% 
+	rename(temp = temperature)
 
-fit <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-	  data= filter(rfu2, population == 9),  
-	  start= list(z= results$z[[1]],w= results$w[[1]],a= results$a[[1]], b= results$b[[1]]),
+
+rfu2 %>% 
+	filter(population == 12) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
+
+d3 <- filter(rfu2, population == 4)
+fit2 <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	  data= d3,  
+	  start= list(z= 25,w= 25,a= 0.2, b= 0.1),
 	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
-	  upper = c(z = 40, w= 80,a =  0.7, b = 0.15),
+	  upper = c(z = 40, w= 80,a =  2, b = 2),
 	  control = nls.control(maxiter=1024, minFactor=1/204800000))
 
-d2 <- filter(rfu2, population == 10)
+summary(fit2)
+coef(fit2)
+
+d2 <- as.data.frame(filter(rfu2, population == 12))
 
 exponential_tpc <- function(a, b, z, w, temp, days) {
-	RFU  <- 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days))
+	return(20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)))
 	
 }
 
-fit <- nls_multstart(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-					 data = d2,
-					 iter = 500,
-					 start_lower = c(z = 0, w= 0, a = -0.2, b = 0),
-					 start_upper = c(z = 30, w= 80, a =  0.5, b = 0.15),
+trydata <- rfu2 %>% 
+	select(population, RFU, days, temp)
+
+
+fit_mult <- nlsLoop(RFU ~ exponential_tpc(a, b, z, w, temp, days),
+					 data = data.frame(trydata),
+					 tries = 500,
+					id_col = population,
 					 supp_errors = 'N',
 					 na.action = na.omit,
-					 lower = c(z = 0, w= 0, a = -0.3, b = 0))
-
-
-
-summary(fit)
-
-
-
-p6 <- rfu %>% 
-	filter(population == 6) %>% 
-	rename(temp = temperature)
-
-p1 <- rfu %>% 
-	filter(population == 1) %>% 
-	rename(temp = temperature)
-
-p10 <- rfu %>% 
-	filter(population == 10) %>% 
-	rename(temp = temperature)
-
-p4 <- rfu %>% 
-	filter(population == 4) %>% 
-	rename(temp = temperature)
-
-p2 <- rfu %>% 
-	filter(population == 2) 
-
-
-growth_function <- function(temp, days)(20 * exp((results$a*exp(results$b*temp)*(1-((temp-results$z)/(results$w/2))^2))*(days)))
-
-avals<-seq(-0.2,1.2,0.02)
-bvals<-seq(-0.2,0.3,0.02)
-
-avals<-seq(0,0.5,0.07)
-bvals<-seq(0,0.16,0.08)
-zvals<-seq(10,15,1)
-wvals<-seq(34,37,1)
-
-
-df <-  expand.grid(a = avals, b = bvals, z = zvals, w = wvals) %>% 
-	mutate(unique_id = rownames(.)) %>% 
-	mutate(sample_size = 1)
+					param_bds = c(0, 40, 0, 80, -0.3, 0.7, 0, 0.15))
 
 
 ##cell_density ~ 800 * exp(r*days)
@@ -78,10 +53,9 @@ df <- df_split[[1]]
 min(rfus, na.rm = TRUE)
 
 fit_growth <- function(df){
-	start_density <- df$RFU[[1]]
-	res <- try(nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	res <- try(nlsLM(RFU ~ df$RFU[[1]] * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 					 data= df,  
-					 start= list(z= results$z[[1]],w= results$w[[1]],a= results$a[[1]], b= results$b[[1]]),
+					 start= list(z= 30,w= 25,a= 0.2, b= 0.1),
 					 lower = c(z = 0, w= 0, a = -0.2, b = 0),
 					 upper = c(z = 45, w= 70,a =  3, b = 1),
 					 control = nls.control(maxiter=1024, minFactor=1/204800000)))
@@ -131,20 +105,18 @@ all_preds <- bs_split %>%
 	map_df(prediction_function, .id = "population")
 
 all_preds %>% 
+	# filter(population == 14) %>% 
 	mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
-	ylim(0, 3) + xlim(0, 45) +
+	ylim(0, 3.2) + xlim(0, 50) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
 
-
+ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
 
 results <- output %>% 
 	filter(df.residual > 5) %>%
 	top_n(n = -1, wt = AIC)
 
-
-rfu2 <- rfu %>% 
-	rename(temp = temperature)
 
 
 fitc1 <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
