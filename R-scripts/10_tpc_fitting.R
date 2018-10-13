@@ -102,7 +102,14 @@ all_preds %>%
 
 ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
 
-
+all_preds %>% 
+	# filter(population == 14) %>% 
+	mutate(population = as.integer(population)) %>% 
+	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
+	ylim(0, 3.2) + xlim(0, 50) +
+	facet_wrap( ~ population) +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
+ggsave("figures/globe-chlamy-TPCs-facet.pdf", width = 12, height = 6)
 
 # bootstrapping -----------------------------------------------------------
 
