@@ -97,13 +97,14 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 
 
 all_rfus3 %>% 
-	filter(temperature == 16) %>% 
-	# filter(round == "repeat") %>% 
+	# filter(temperature ==28) %>% 
+	filter(round == "repeat") %>% 
 	# filter(population == 1) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
-	geom_point(size = 3) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
+	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
 	facet_wrap( ~ population, scales = "free") +
-	geom_line() + xlim(0, 3)
+	geom_line() +
+	xlim(0, 3)
 ggsave("figures/globe-chlamy-RFU-time.pdf", width = 12, height = 10)
 
 ### which parts are exponential
