@@ -10,6 +10,6 @@ This is how it's organized:
 
 [data-raw](https://github.com/JoeyBernhardt/ChlamEE-TPC/tree/master/data-raw) contains all the raw RFU and flow cytometry data
 
-[data-processed])(https://github.com/JoeyBernhardt/ChlamEE-TPC/tree/master/data-processed) contains processed data
+[data-processed](https://github.com/JoeyBernhardt/ChlamEE-TPC/tree/master/data-processed) contains processed data
 
 [figures](https://github.com/JoeyBernhardt/ChlamEE-TPC/tree/master/figures) contains the figures
