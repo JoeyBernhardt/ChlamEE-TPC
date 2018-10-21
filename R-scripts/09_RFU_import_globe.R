@@ -20,20 +20,32 @@ plate_key <- read_excel("data-general/globe-chlamy-plate-key.xlsx")
 # read in RFU data --------------------------------------------------------
 RFU_files <- c(list.files("data-raw/globe-chlamy-RFU", full.names = TRUE))
 RFU_files <- RFU_files[grepl(".xlsx", RFU_files)]
-	names(RFU_files) <- RFU_files %>% 
+	
+names(RFU_files) <- RFU_files %>% 
 	gsub(pattern = ".xlsx$", replacement = "")
+	
+# RFU_files <- RFU_files[!grepl("acc", RFU_files)]
 
 all_plates <- map_df(RFU_files, read_excel, range = "B56:N64", .id = "file_name") %>% 
 	rename(row = X__1) %>% 
-	filter(!grepl("setup", file_name)) 
+	filter(!grepl("setup", file_name)) %>%
+	filter(!grepl("acc", file_name))
+	
 all_times <- map_df(RFU_files, read_excel, range = "A6:B8", .id = "file_name") %>% 
 	clean_names() %>% 
+	filter(!grepl("acc", file_name)) %>% 
 	filter(!is.na(plate_1)) %>% 
 	filter(!grepl("setup", file_name)) %>% 
 	spread(key = plate_number, value = plate_1) %>% 
 	separate(Time, into = c("crap", "time"), sep = " ") %>% 
 	select(-crap) %>% 
 	separate(file_name, into = c("path", "plate"), sep = "plate", remove = FALSE)
+
+
+
+
+
+
 
 all_plates2 <- left_join(all_plates, all_times, by = "file_name")
 
@@ -69,7 +81,7 @@ inoc_densities <- all_rfus2 %>%
 	summarise_each(funs(mean), RFU) %>% 
 	mutate(date_time = ymd_hms("2018-10-10 20:33:46"))
 
-inoc10 <- inoc_densities %>% 
+	inoc10 <- inoc_densities %>% 
 	mutate(temperature = 10) %>% 
 	mutate(plate = 4)
 inoc16 <- inoc_densities %>% 
@@ -97,14 +109,14 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 
 
 all_rfus3 %>% 
-	filter(temperature == 10) %>% 
+	filter(temperature == 16) %>% 
 	# filter(round == "repeat") %>% 
 	# filter(population == 1) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
 	facet_wrap( ~ population, scales = "free") +
 	geom_line() +
-	xlim(0, 7)
+	xlim(0, 14)
 ggsave("figures/globe-chlamy-RFU-time-10C.pdf", width = 12, height = 10)
 
 ### which parts are exponential
