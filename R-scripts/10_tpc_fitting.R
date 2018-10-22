@@ -13,46 +13,10 @@ rfu2 <- rfu %>%
 	filter(!is.na(RFU))
 
 
-rfu2 %>% 
-	filter(population == 12) %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
-
-d3 <- filter(rfu2, population == 4)
-fit2 <- nlsLM(RFU ~ 15 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-	  data= d3,  
-	  start= list(z= 25,w= 25,a= 0.2, b= 0.1),
-	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
-	  upper = c(z = 40, w= 80,a =  2, b = 2),
-	  control = nls.control(maxiter=1024, minFactor=1/204800000))
-
-summary(fit2)
-coef(fit2)
-
-d2 <- as.data.frame(filter(rfu2, population == 12))
-
-exponential_tpc <- function(a, b, z, w, temp, days) {
-	return(20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)))
-	
-}
 
 
 ##cell_density ~ 800 * exp(r*days)
 
-df <- df_split[[2]]
-min(rfus, na.rm = TRUE)
-
-df %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
-
-
-df <- df_split[[4]]
-
-?bootstrap
-library(rsample)
-
-
-df %>% 
-	bootstraps(times = 100) %>% View
 
 fit_growth <- function(df){
 	res <- try(nlsLM(RFU ~ df$RFU[[1]] * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
@@ -82,6 +46,95 @@ df_split <- rfu2 %>%
 output <- df_split %>%
 	map_df(fit_growth, .id = "population") 
 
+
+get_topt <- function(df){
+	grfunc<-function(x){
+		-nbcurve(x, z = df$z[[1]],w = df$w[[1]],a = df$a[[1]],b = df$b[[1]])
+	}
+	optinfo<-optim(c(x=df$z[[1]]),grfunc)
+	opt <-c(optinfo$par[[1]])
+	maxgrowth <- c(-optinfo$value)
+	results <- data.frame(topt = opt, rmax = maxgrowth)
+	return(results)
+}
+
+output_split <- output %>% 
+	split(.$population)
+
+library(rootSolve)
+nbcurve<-function(temp,z,w,a,b){
+	res<-a*exp(b*temp)*(1-((temp-z)/(w/2))^2)
+	res
+}
+
+topts <- output_split %>% 
+	map_df(get_topt, .id = "population") 
+
+library(forcats)
+library(rootSolve)
+
+topts %>% 
+	mutate(population = as.factor(population)) %>% 
+	ggplot(aes(x = fct_reorder(population, topt), y = topt)) + geom_point() +
+	xlab("Population") +ylab("Topt")
+
+get_tmax <- function(df){
+	uniroot.all(function(x) nbcurve(x, z = df$z[[1]],w = df$w[[1]],a = df$a[[1]], b = df$b[[1]]),c(30,150))
+}
+
+tmaxes <- output_split %>% 
+	map(get_tmax) %>% 
+	unlist() %>% 
+	as_data_frame() %>% 
+	rename(tmax = value) %>% 
+	mutate(population = rownames(.)) 
+
+get_tmin <- function(df){
+	uniroot.all(function(x) nbcurve(x, z = df$z[[1]],w = df$w[[1]],a = df$a[[1]], b = df$b[[1]]),c(-40,25))
+}
+
+tmins <- output_split %>% 
+	map(get_tmin) %>% 
+	unlist() %>% 
+	as_data_frame() %>% 
+	rename(tmin = value) %>% 
+	mutate(population = rownames(.))
+
+
+limits <- left_join(tmins, tmaxes, by = "population")
+limits_all <- left_join(limits, topts, by = "population")
+
+limits_all %>% 
+	mutate(population = as.factor(population)) %>% 
+	ggplot(aes(x = fct_reorder(population, tmax), y = tmax)) + geom_point() +
+	xlab("Population") +ylab("Tmax")
+
+limits_all %>% 
+	filter(population != 7) %>% 
+	mutate(population = as.factor(population)) %>% 
+	ggplot(aes(x = fct_reorder(population, tmin), y = tmin)) + geom_point() +
+	xlab("Population") +ylab("Tmin")
+
+
+
+limits_all %>% 
+	# filter(population != 7) %>% 
+	mutate(population = as.factor(population)) %>% 
+	ggplot(aes(x = topt, y = rmax)) + geom_point() +
+	xlab("Topt") + ylab("rmax") +
+	geom_smooth(method = "lm")
+
+limits_all %>% 
+	# filter(population != 7) %>% 
+	mutate(population = as.factor(population)) %>% 
+	ggplot(aes(x = tmax, y = rmax)) + geom_point() +
+	xlab("Tmax") + ylab("rmax") +
+	geom_smooth(method = "lm")
+
+limits_all %>% 
+	# filter(population != 7) %>% 
+	mutate(population = as.factor(population)) %>% 
+	ggplot(aes(x = topt)) + geom_histogram()
 
 
 prediction_function <- function(df) {
@@ -131,24 +184,50 @@ ggsave("figures/globe-chlamy-TPCs-facet.pdf", width = 12, height = 6)
 # bootstrapping -----------------------------------------------------------
 
 df <- rfu2 %>% 
-	filter(population == 3, !is.na(RFU))
+	filter(population == 4, !is.na(RFU))
 
 df$RFU[[2]]
 
-fit1 <- nlsLM(RFU ~ mean(c(df$RFU[1:20]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+fit1 <- nlsLM(RFU ~ mean(c(df$RFU[1:10]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 				 data= df,  
 			start= list(z= 25,w= 25,a= 0.2, b= 0.07),
 			  lower = c(z = 0, w= 0, a = -0.2, b = 0),
 			  upper = c(z = 40, w= 80,a =  2, b = 2),
 				 control = nls.control(maxiter=1024, minFactor=1/204800000))
+
+
+fit_bootstrap <- function(df){
+bootnls <- df %>% 
+	bootstrap(1000) %>% 
+	do(tidy(nlsLM(RFU ~ mean(c(.$RFU[1:20]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	  data= .,  
+	  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
+	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
+	  upper = c(z = 40, w= 80,a =  2, b = 2),
+	  control = nls.control(maxiter=1024, minFactor=1/204800000))))
+}
+
+
+df_split <- rfu2 %>% 
+	filter(!is.na(RFU)) %>% 
+	split(.$population)
+
+output_bs2 <- df_split %>%
+	map_df(fit_bootstrap, .id = "population") 
+
+
+
+
+# ok now let’s take the bs replicates and predict them! -------------------
+
+
+nls_boot_c <- nlsBoot(fit1, niter = 1000)
 summary(fit1)
-class(fit1)
+tidy(fit1, conf.int = TRUE)
 coef(fit1)
 confint2(fit1)
 best_fit_c <- coef(fit1)
 nls_boot_c <- nlsBoot(fit1, niter = 1000)
-?bootstrap
-
 nls_boot_coefs_c <- as_data_frame(nls_boot_c$coefboot)
 ctpc <- as_data_frame(best_fit_c) %>% 
 	rownames_to_column(.) %>% 
@@ -173,24 +252,30 @@ prediction_function <- function(df) {
 }
 
 
-bs_split <- nls_boot_coefs_c %>%
-	mutate(replicate = rownames(.)) %>% 
-	split(.$replicate)
+bs_split <- output_bs %>%
+	unite(unique_id, replicate, population, sep = "_", remove = FALSE) %>% 
+	ungroup() %>% 
+	select(unique_id, term, estimate) %>% 
+	spread(key = term, value = estimate) %>% 
+	split(.$unique_id)
+
+bs_split[[1]]
 
 all_preds_bs <- bs_split %>% 
-	map_df(prediction_function, .id = "replicate")
+	map_df(prediction_function, .id = "unique_id")
 
 limits_c <- all_preds_bs %>% 
-	group_by(temperature) %>% 
+	separate(unique_id, into = c("replicate", "population")) %>% 
+	group_by(temperature, population) %>% 
 	summarise(q2.5=quantile(growth, probs=0.025),
 			  q97.5=quantile(growth, probs=0.975),
 			  mean = mean(growth)) 
 
-limits_c3 <- all_preds_bs %>% 
-	group_by(temperature) %>% 
-	summarise(q2.5=quantile(growth, probs=0.025),
-			  q97.5=quantile(growth, probs=0.975),
-			  mean = mean(growth)) 
+# limits_c3 <- all_preds_bs %>% 
+# 	group_by(temperature) %>% 
+# 	summarise(q2.5=quantile(growth, probs=0.025),
+# 			  q97.5=quantile(growth, probs=0.975),
+# 			  mean = mean(growth)) 
 
 
 p <- ggplot(data = data.frame(x = 0), mapping = aes(x = x))
@@ -198,9 +283,9 @@ p +
 # geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 1)) + 
 	# geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA),
 	# 			data = limits_c, fill = "orange", alpha = 0.5) +
-	geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 3)) + 
-	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA),
-				data = limits_c3, fill = "orange", alpha = 0.5) +
+	geom_line(aes(x = temperature, y = growth, color = population), data = all_preds) + 
+	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA, fill = population),
+				data = limits_c, alpha = 0.5) +
 	coord_cartesian(ylim = c(0, 3), xlim = c(0, 50)) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
 
