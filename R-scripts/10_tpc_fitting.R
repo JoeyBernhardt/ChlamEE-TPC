@@ -9,7 +9,8 @@ library(cowplot)
 rfu <- read_csv("data-processed/globe-chlamy-exponential-RFU-time.csv")
 
 rfu2 <- rfu %>% 
-	rename(temp = temperature)
+	rename(temp = temperature) %>% 
+	filter(!is.na(RFU))
 
 
 rfu2 %>% 
@@ -17,7 +18,7 @@ rfu2 %>%
 	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
 
 d3 <- filter(rfu2, population == 4)
-fit2 <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+fit2 <- nlsLM(RFU ~ 15 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 	  data= d3,  
 	  start= list(z= 25,w= 25,a= 0.2, b= 0.1),
 	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
@@ -37,21 +38,37 @@ exponential_tpc <- function(a, b, z, w, temp, days) {
 
 ##cell_density ~ 800 * exp(r*days)
 
-df <- df_split[[1]]
+df <- df_split[[2]]
 min(rfus, na.rm = TRUE)
+
+df %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
+
+
+df <- df_split[[4]]
+
+?bootstrap
+library(rsample)
+
+
+df %>% 
+	bootstraps(times = 100) %>% View
 
 fit_growth <- function(df){
 	res <- try(nlsLM(RFU ~ df$RFU[[1]] * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 					 data= df,  
-					 start= list(z= 30,w= 25,a= 0.2, b= 0.1),
+					 start= list(z= 25,w= 25,a= 0.2, b= 0.1),
 					 lower = c(z = 0, w= 0, a = -0.2, b = 0),
-					 upper = c(z = 45, w= 70,a =  3, b = 1),
+					 upper = c(z = 40, w= 80,a =  2, b = 2),
 					 control = nls.control(maxiter=1024, minFactor=1/204800000)))
 	if(class(res)!="try-error"){
-		out1 <- tidy(res) %>% 
-			select(estimate, term) %>% 
-			spread(key = term, value = estimate)
+		out1 <- tidy(res) %>%  
+		select(estimate, term) %>%  
+		spread(key = term, value = estimate)
 		out2 <- glance(res)
+		# ci <-clean_names(as.data.frame(confint2(res))) %>% 
+		# 	rownames_to_column() %>% 
+		# 	rename(term = rowname) 
 	}
 	all <- bind_cols(out1, out2)
 	all
@@ -97,7 +114,7 @@ all_preds %>%
 	# filter(population == 14) %>% 
 	mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
-	ylim(0, 3.2) + xlim(0, 50) +
+	ylim(0, 3.5) + xlim(0, 50) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
 
 ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
@@ -106,8 +123,8 @@ all_preds %>%
 	# filter(population == 14) %>% 
 	mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
-	ylim(0, 3.2) + xlim(0, 50) +
-	facet_wrap( ~ population) +
+	ylim(0, 3.5) + xlim(0, 50) +
+	facet_wrap( ~ population) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
 ggsave("figures/globe-chlamy-TPCs-facet.pdf", width = 12, height = 6)
 
@@ -116,13 +133,13 @@ ggsave("figures/globe-chlamy-TPCs-facet.pdf", width = 12, height = 6)
 df <- rfu2 %>% 
 	filter(population == 3, !is.na(RFU))
 
-df$RFU[[1]]
+df$RFU[[2]]
 
-fit1 <- nlsLM(RFU ~  8 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+fit1 <- nlsLM(RFU ~ mean(c(df$RFU[1:20]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 				 data= df,  
-				 start= list(z= 30,w= 25,a= 0.2, b= 0.1),
-				 lower = c(z = 0, w= 0, a = -0.2, b = 0),
-				 upper = c(z = 45, w= 70,a =  3, b = 1),
+			start= list(z= 25,w= 25,a= 0.2, b= 0.07),
+			  lower = c(z = 0, w= 0, a = -0.2, b = 0),
+			  upper = c(z = 40, w= 80,a =  2, b = 2),
 				 control = nls.control(maxiter=1024, minFactor=1/204800000))
 summary(fit1)
 class(fit1)
@@ -130,6 +147,8 @@ coef(fit1)
 confint2(fit1)
 best_fit_c <- coef(fit1)
 nls_boot_c <- nlsBoot(fit1, niter = 1000)
+?bootstrap
+
 nls_boot_coefs_c <- as_data_frame(nls_boot_c$coefboot)
 ctpc <- as_data_frame(best_fit_c) %>% 
 	rownames_to_column(.) %>% 
@@ -302,3 +321,53 @@ fit_function <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(day
 					  lower = c(z = 0, w= 0, a = -0.2, b = 0),
 					  upper = c(z = 30, w= 80,a =  0.5, b = 0.15),
 					  control = nls.control(maxiter=1024, minFactor=1/204800000))
+
+
+
+
+
+
+
+
+# nls multstart -----------------------------------------------------------
+# 
+# # start= list(z= 25,w= 25,a= 0.2, b= 0.1),
+# lower = c(z = 0, w= 0, a = -0.2, b = 0),
+# upper = c(z = 40, w= 80,a =  2, b = 2),
+
+library(nls.multstart)
+output2 <- rfu2 %>% 
+	group_by(population) %>% 
+	nest() %>% 
+	mutate(fit = purrr::map(data, ~ nls_multstart(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+												  data = .x,
+												  iter = 500,
+												  start_lower = c(z= 25,w= 25,a= 0.2, b= 0.1),
+												  start_upper = c(z= 35,w= 35,a= 0.4, b= 0.2),
+												  supp_errors = 'N',
+												  na.action = na.omit,
+												  lower = c(z = 0, w= 0, a = -0.2, b = 0),
+												  upper = c(z = 40, w= 80,a =  2, b = 2),
+												  control = nls.control(maxiter=1000, minFactor=1/204800000))))
+
+
+data_sub <- df_split[[4]] %>% 
+	filter(round == "single")
+fit1 <- nls_multstart(RFU ~ 18 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+			  data = data_sub,
+			  iter = 500,
+			  start_lower = c(z= 25,w= 25,a= 0.0, b= 0.1),
+			  start_upper = c(z= 35,w= 35,a= 0.3, b= 0.2),
+			  supp_errors = 'N',
+			  na.action = na.omit,
+			  lower = c(z = 0, w= 0, a = -0.2, b = -2),
+			  upper = c(z = 40, w= 80,a =  1, b = 2),
+			  control = nls.control(maxiter=1000, minFactor=1/204800000))
+
+info <- output2 %>%
+	unnest(fit %>% map(glance))
+params <- output2 %>%
+	unnest(fit %>% map(tidy))
+
+warnings()
+

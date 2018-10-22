@@ -109,14 +109,13 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 
 
 all_rfus3 %>% 
-	filter(temperature == 16) %>% 
-	# filter(round == "repeat") %>% 
+	filter(temperature == 10) %>% 
+	# filter(days < 3) %>% 
 	# filter(population == 1) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
 	facet_wrap( ~ population, scales = "free") +
-	geom_line() +
-	xlim(0, 14)
+	geom_line() 
 ggsave("figures/globe-chlamy-RFU-time-10C.pdf", width = 12, height = 10)
 
 ### which parts are exponential
@@ -138,10 +137,10 @@ ggsave("figures/globe-chlamy-RFU-time-round.pdf", width = 20, height = 15)
 all4 <- all_rfus3 %>% 
 	mutate(exponential = case_when(temperature == 34 & days < 1.75 ~ "yes",
 								   temperature == 28 & days < 1.75 ~ "yes",
-								   temperature == 22 & days < 3 ~ "yes",
+								   temperature == 22 & days < 2.5 ~ "yes",
 								   temperature == 16 & days < 3 ~ "yes",
-								   temperature == 10 & days < 3 ~ "yes",
-								   temperature == 40 & days < 3 ~ "yes",
+								   temperature == 10 & days < 14 ~ "yes",
+								   temperature == 40 & days < 7 ~ "yes",
 								   TRUE ~ "no"))
 
 exponential <- all4 %>% 
