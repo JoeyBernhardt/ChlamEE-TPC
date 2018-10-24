@@ -8,18 +8,22 @@ library(cowplot)
 
 rfu <- read_csv("data-processed/globe-chlamy-exponential-RFU-time.csv")
 
+rfu <- exponential
 rfu2 <- rfu %>% 
 	rename(temp = temperature) %>% 
-	filter(!is.na(RFU))
+	filter(!is.na(RFU)) %>% 
+	filter(round == "repeat")
 
+p4 <- rfu2 %>% 
+	filter(population == 1)
 
 
 
 ##cell_density ~ 800 * exp(r*days)
 
-
+df <- p4
 fit_growth <- function(df){
-	res <- try(nlsLM(RFU ~ df$RFU[[1]] * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	res <- try(nlsLM(RFU ~ mean(c(df$RFU[df$days ==0])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 					 data= df,  
 					 start= list(z= 25,w= 25,a= 0.2, b= 0.1),
 					 lower = c(z = 0, w= 0, a = -0.2, b = 0),
@@ -188,7 +192,7 @@ df <- rfu2 %>%
 
 df$RFU[[2]]
 
-fit1 <- nlsLM(RFU ~ mean(c(df$RFU[1:10]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+fit1 <- nlsLM(RFU ~ mean(c(df$RFU[df$days ==0])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 				 data= df,  
 			start= list(z= 25,w= 25,a= 0.2, b= 0.07),
 			  lower = c(z = 0, w= 0, a = -0.2, b = 0),
@@ -198,8 +202,8 @@ fit1 <- nlsLM(RFU ~ mean(c(df$RFU[1:10]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/
 
 fit_bootstrap <- function(df){
 bootnls <- df %>% 
-	bootstrap(1000) %>% 
-	do(tidy(nlsLM(RFU ~ mean(c(.$RFU[1:20]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	bootstrap(100) %>% 
+	do(tidy(nlsLM(RFU ~ mean(c(.$RFU[1:28]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 	  data= .,  
 	  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
 	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
@@ -211,9 +215,108 @@ bootnls <- df %>%
 df_split <- rfu2 %>% 
 	filter(!is.na(RFU)) %>% 
 	split(.$population)
-
 output_bs2 <- df_split %>%
 	map_df(fit_bootstrap, .id = "population") 
+
+
+df3 <- df_split[[8]]
+fit3 <- nlsLM(RFU ~ mean(c(df3$RFU[days == 0]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	  data= df3,  
+	  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
+	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
+	  upper = c(z = 40, w= 80,a =  2, b = 2),
+	  control = nls.control(maxiter=1024, minFactor=1/204800000))
+
+boot8 <- nlsBoot(fit3)
+
+
+
+nls_boot_coefs_1 <- as_data_frame(boot1$coefboot) %>% 
+	mutate(population = 1)
+nls_boot_coefs_2 <- as_data_frame(boot2$coefboot) %>% 
+	mutate(population = 2)
+nls_boot_coefs_3 <- as_data_frame(boot3$coefboot) %>% 
+	mutate(population = 3)
+nls_boot_coefs_4 <- as_data_frame(boot4$coefboot) %>% 
+	mutate(population = 4)
+nls_boot_coefs_5 <- as_data_frame(boot5$coefboot) %>% 
+	mutate(population = 5)
+nls_boot_coefs_6 <- as_data_frame(boot6$coefboot) %>% 
+	mutate(population = 6)
+nls_boot_coefs_7 <- as_data_frame(boot7$coefboot) %>% 
+	mutate(population = 7)
+nls_boot_coefs_8 <- as_data_frame(boot8$coefboot) %>% 
+	mutate(population = 8)
+nls_boot_coefs_9 <- as_data_frame(boot9$coefboot) %>% 
+	mutate(population = 9)
+nls_boot_coefs_10 <- as_data_frame(boot10$coefboot) %>% 
+	mutate(population = 10)
+nls_boot_coefs_11 <- as_data_frame(boot11$coefboot) %>% 
+	mutate(population = 11)
+nls_boot_coefs_12 <- as_data_frame(boot12$coefboot) %>% 
+	mutate(population = 12)
+nls_boot_coefs_13 <- as_data_frame(boot13$coefboot) %>% 
+	mutate(population = 13)
+nls_boot_coefs_14 <- as_data_frame(boot14$coefboot) %>% 
+	mutate(population = 14)
+nls_boot_coefs_15 <- as_data_frame(boot15$coefboot) %>% 
+	mutate(population = 15)
+
+all_boots <- bind_rows(nls_boot_coefs_1,nls_boot_coefs_2, nls_boot_coefs_3, nls_boot_coefs_4, nls_boot_coefs_5,
+					   nls_boot_coefs_6, nls_boot_coefs_7, nls_boot_coefs_8, nls_boot_coefs_9, nls_boot_coefs_10,
+					   nls_boot_coefs_11, nls_boot_coefs_12, nls_boot_coefs_13, nls_boot_coefs_14, nls_boot_coefs_15) %>% 
+	rownames_to_column()
+
+
+all_boots_split <- all_boots %>% 
+	split(.$rowname)
+
+all_preds_bs <- all_boots_split %>% 
+	map_df(prediction_function, .id = "unique_id")
+
+all_preds_bs <- left_join(all_preds_bs, all_boots, by = c("unique_id" = "rowname"))
+
+limits_c <- all_preds_bs %>% 
+	group_by(temperature, population) %>% 
+	summarise(q2.5=quantile(growth, probs=0.025),
+			  q97.5=quantile(growth, probs=0.975),
+			  mean = mean(growth)) 
+
+
+
+nls_boot_c <- nlsBoot(fit3, niter = 1000)
+nls_boot_coefs_c <- as_data_frame(boot11$coefboot)
+ctpc <- as_data_frame(best_fit_c) %>% 
+	rownames_to_column(.) %>% 
+	spread(key = rowname, value = value)
+
+
+
+
+fit_boot <- function(df){
+	res <- try(nlsLM(RFU ~ mean(c(df$RFU[df$days ==0])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+					 data= df,  
+					 start= list(z= 25,w= 25,a= 0.2, b= 0.1),
+					 lower = c(z = 0, w= 0, a = -0.2, b = 0),
+					 upper = c(z = 40, w= 80,a =  2, b = 2),
+					 control = nls.control(maxiter=1024, minFactor=1/204800000)))
+	if(class(res)!="try-error"){
+		nls_boot_c <- nlsBoot(res, niter = 1000)
+		nls_boot_coefs_c <- as_data_frame(nls_boot_c$coefboot)
+	}
+	all <- bind_cols(nls_boot_coefs_c)
+	all
+}
+
+
+
+df_split <- rfu2 %>% 
+	filter(!is.na(RFU)) %>% 
+	split(.$population)
+
+output_boot <- df_split %>%
+	map_df(fit_boot, .id = "population") 
+
 
 
 
@@ -277,16 +380,24 @@ limits_c <- all_preds_bs %>%
 # 			  q97.5=quantile(growth, probs=0.975),
 # 			  mean = mean(growth)) 
 
+unique(limits_c$population)
+
+limits_c <- limits_c %>% 
+	mutate(population = as.factor(as.numeric(population)))
+all_preds <- all_preds %>% 
+	mutate(population = as.factor(as.numeric(population)))
 
 p <- ggplot(data = data.frame(x = 0), mapping = aes(x = x))
 p +
 # geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 1)) + 
 	# geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA),
 	# 			data = limits_c, fill = "orange", alpha = 0.5) +
-	geom_line(aes(x = temperature, y = growth, color = population), data = all_preds) + 
-	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA, fill = population),
+	geom_line(aes(x = temperature, y = growth, color = factor(population)), data = all_preds) +
+	geom_line(aes(x = temperature, y = mean, color = factor(population)), data = limits_c) +
+	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, fill = factor(population)),
 				data = limits_c, alpha = 0.5) +
 	coord_cartesian(ylim = c(0, 3), xlim = c(0, 50)) +
+	# facet_wrap( ~ population) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
 
 

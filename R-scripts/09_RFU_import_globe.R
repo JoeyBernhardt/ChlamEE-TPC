@@ -79,26 +79,33 @@ inoc_densities <- all_rfus2 %>%
 	unite(col = well_plate, well, plate, remove =  FALSE) %>% 
 	group_by(population) %>% 
 	summarise_each(funs(mean), RFU) %>% 
-	mutate(date_time = ymd_hms("2018-10-10 20:33:46"))
+	mutate(date_time = ymd_hms("2018-10-10 20:33:46")) %>% 
+	mutate(round ="repeat")
 
 	inoc10 <- inoc_densities %>% 
 	mutate(temperature = 10) %>% 
-	mutate(plate = 4)
+	mutate(plate = 4) %>% 
+		mutate(days = 0)
 inoc16 <- inoc_densities %>% 
 	mutate(temperature = 16)%>% 
-	mutate(plate = 8)
+	mutate(plate = 8)%>% 
+	mutate(days = 0)
 inoc22 <- inoc_densities %>% 
 	mutate(temperature = 22) %>% 
-	mutate(plate = 12)
+	mutate(plate = 12)%>% 
+	mutate(days = 0)
 inoc28 <- inoc_densities %>% 
 	mutate(temperature = 28) %>% 
-	mutate(plate = 16)
+	mutate(plate = 16)%>% 
+	mutate(days = 0)
 inoc34 <- inoc_densities %>% 
 	mutate(temperature = 34) %>% 
-	mutate(plate = 20)
+	mutate(plate = 20)%>% 
+	mutate(days = 0)
 inoc40 <- inoc_densities %>% 
 	mutate(temperature = 40) %>% 
-	mutate(plate = 24)
+	mutate(plate = 24)%>% 
+	mutate(days = 0)
 all_inocs <- bind_rows(inoc10, inoc16, inoc22, inoc28, inoc34, inoc40)
 
 all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>% 
@@ -109,10 +116,10 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 
 
 all_rfus3 %>% 
-	filter(temperature == 10) %>% 
+	filter(temperature == 16) %>% 
 	# filter(days < 3) %>% 
 	# filter(population == 1) %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	ggplot(aes(x = days, y = RFU, color = factor(plate), group = well_plate)) +
 	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
 	facet_wrap( ~ population, scales = "free") +
 	geom_line() 
