@@ -75,6 +75,8 @@ all_rfus2 <- all_rfus %>%
 
 
 all_rfus2 %>% 
-	filter(temperature == 10) %>% 
+	# filter(temperature == 10) %>% 
 	ggplot(aes(x = days, y = RFU, group = well_plate, color = factor(temperature))) + geom_point() +
-	facet_wrap( ~ population, scales = "free") + geom_line()
+	facet_wrap( ~ population + temperature, scales = "free") +
+	geom_line() + scale_color_viridis_d(name = "Temperature")
+ggsave("figures/acclimation-time.pdf", width = 16, height = 16)
