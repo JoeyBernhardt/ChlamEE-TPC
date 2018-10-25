@@ -116,7 +116,7 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 
 
 all_rfus3 %>% 
-	filter(temperature == 40) %>% 
+	filter(temperature == 10) %>% 
 	# filter(days < 3) %>% 
 	# filter(population == 1) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(plate), group = well_plate)) +

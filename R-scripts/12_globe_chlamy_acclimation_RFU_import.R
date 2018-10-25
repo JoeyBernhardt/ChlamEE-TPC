@@ -11,7 +11,8 @@ library(lubridate)
 
 plate_layout <- read_excel("data-general/globe-chlamy-acclimation-plate-setup.xlsx") 
 
-plate_key <- read_excel("data-general/globe-chlamy-acclimation-plate-key.xlsx") 
+plate_key <- read_excel("data-general/globe-chlamy-acclimation-plate-key.xlsx") %>% 
+	mutate(temperature = ifelse(temperature == 20, 22, temperature))
 
 plate_info <- left_join(plate_key, plate_layout, by = "plate_key")
 
@@ -74,5 +75,6 @@ all_rfus2 <- all_rfus %>%
 
 
 all_rfus2 %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(temperature))) + geom_point() +
-	facet_wrap( ~ population)
+	filter(temperature == 10) %>% 
+	ggplot(aes(x = days, y = RFU, group = well_plate, color = factor(temperature))) + geom_point() +
+	facet_wrap( ~ population, scales = "free") + geom_line()
