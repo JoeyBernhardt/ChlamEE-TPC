@@ -76,7 +76,7 @@ all_rfus2 <- all_rfus %>%
 
 all_rfus2 %>% 
 	separate(well, into =c("row", "column"), sep = 1, remove = FALSE) %>% 
-	# filter(temperature == 10) %>% 
+	filter(temperature == 10) %>% 
 	ggplot(aes(x = days, y = RFU, group = well_plate, color = row)) + geom_point() +
 	facet_wrap( ~ population + temperature, scales = "free") +
 	geom_line() + scale_color_viridis_d(name = "Row")
