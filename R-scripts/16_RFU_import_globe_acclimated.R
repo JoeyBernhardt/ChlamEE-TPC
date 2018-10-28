@@ -80,6 +80,7 @@ all_rfus3 <- all_rfus2 %>%
 
 
 all_rfus3 %>% 
+	filter(temperature == 16) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
 	facet_wrap( ~ population, scales = "free") +
