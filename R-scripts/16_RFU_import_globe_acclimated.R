@@ -81,7 +81,7 @@ all_rfus3 <- all_rfus2 %>%
 
 all_rfus3 %>%
 	filter(!plate %in% c(37, 38, 39, 40)) %>% 
-	# filter(temperature == 34) %>% 
+	filter(temperature == 28) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
 	scale_color_viridis_d(name = "Temperature") +
@@ -95,3 +95,16 @@ all_rfus4 <- all_rfus3 %>%
 	filter(!plate %in% c(37, 38, 39, 40)) 
 
 write_csv(all_rfus4, "data-processed/globe-chlamy-acclimated-RFU-time.csv")
+
+
+all4 <- all_rfus4 %>% 
+	mutate(exponential = case_when(temperature == 34 & days < 1.75 ~ "yes",
+								   temperature == 28 & days < 1.75 ~ "yes",
+								   temperature == 22 & days < 2.5 ~ "yes",
+								   temperature == 16 & days < 3 ~ "yes",
+								   temperature == 10 & days < 20 ~ "yes",
+								   temperature == 40 & days < 7 ~ "yes",
+								   TRUE ~ "no"))
+
+exponential <- all4 %>% 
+	filter(exponential == "yes")

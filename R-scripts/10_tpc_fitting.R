@@ -11,19 +11,19 @@ rfu <- read_csv("data-processed/globe-chlamy-exponential-RFU-time.csv")
 rfu <- exponential
 rfu2 <- rfu %>% 
 	rename(temp = temperature) %>% 
-	filter(!is.na(RFU)) %>% 
-	filter(round == "repeat")
+	filter(!is.na(RFU)) 
 
 p4 <- rfu2 %>% 
-	filter(population == 1)
+	filter(population == 2)
 
-
+p4 %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
 
 ##cell_density ~ 800 * exp(r*days)
 
 df <- p4
 fit_growth <- function(df){
-	res <- try(nlsLM(RFU ~ mean(c(df$RFU[df$days ==0])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+	res <- try(nlsLM(RFU ~  mean(c(df$RFU[df$days < 0.25])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
 					 data= df,  
 					 start= list(z= 25,w= 25,a= 0.2, b= 0.1),
 					 lower = c(z = 0, w= 0, a = -0.2, b = 0),
@@ -46,6 +46,7 @@ fit_growth <- function(df){
 df_split <- rfu2 %>% 
 	filter(!is.na(RFU)) %>% 
 	split(.$population)
+
 
 output <- df_split %>%
 	map_df(fit_growth, .id = "population") 
@@ -174,7 +175,11 @@ all_preds %>%
 	ylim(0, 3.5) + xlim(0, 50) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
 
-ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
+ggsave("figures/globe-chlamy-TPCs-acclimated.pdf", width = 12, height = 6)
+
+all_preds_acclimated <- all_preds
+write_csv(all_preds_acclimated, "data-processed/all_preds_acclimated.csv")
+write_csv(all_preds, "data-processed/all_preds_not_acclimated.csv")
 
 all_preds %>% 
 	# filter(population == 14) %>% 

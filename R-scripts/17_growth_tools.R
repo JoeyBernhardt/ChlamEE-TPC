@@ -43,8 +43,8 @@ all4 %>%
 
 
 all_rfus4 %>% 
-	filter(population == 6, temperature == 40) %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	filter(population == 7, temperature == 40) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(plate), group = well_plate)) +
 	geom_point(size = 2) +
 	# scale_color_viridis_d(name = "Temperature") +
 	xlab("Days") +
@@ -52,7 +52,7 @@ all_rfus4 %>%
 	geom_line() 
 
 pop8 <- all_rfus4 %>% 
-	filter(population == 6, temperature != 22) %>% 
+	filter(population == 7, plate != 36) %>% 
 	mutate(ln.fluor = log(RFU))
 
 gdat8 <- pop8 %>%
@@ -67,3 +67,5 @@ pop8_growth <- gdat8 %>%
 nbcurve.traits8 <- get.nbcurve.tpc(pop8_growth$temperature,pop8_growth$mu,method='grid.mle2',
 								 plotQ=T,conf.bandQ =T,fpath=NA)
 
+
+tpcs$o
