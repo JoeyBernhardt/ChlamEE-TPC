@@ -79,7 +79,8 @@ all_rfus3 <- all_rfus2 %>%
 	unite(col = well_plate, well, plate, remove =  FALSE) 
 
 
-all_rfus3 %>% 
+all_rfus3 %>%
+	filter(!plate %in% c(37, 38, 39, 40)) %>% 
 	# filter(temperature == 34) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
@@ -88,3 +89,9 @@ all_rfus3 %>%
 	facet_wrap( ~ population, scales = "free") +
 	geom_line() 
 ggsave("figures/globe-chlamy-acclimated-RFU-time.pdf", width = 10, height = 8)
+
+
+all_rfus4 <- all_rfus3 %>%
+	filter(!plate %in% c(37, 38, 39, 40)) 
+
+write_csv(all_rfus4, "data-processed/globe-chlamy-acclimated-RFU-time.csv")
