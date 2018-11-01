@@ -1,7 +1,29 @@
 
 library(vegan)
 
-all_preds
+
+curves_globe <-read_csv("data-processed/all_preds_not_acclimated.csv") %>% 
+	mutate(history = "not acclimated")
+curves_acc <- read_csv("data-processed/all_preds_acclimated.csv") %>% 
+	mutate(history = "acclimated")
+
+all_curves <- bind_rows(curves_globe, curves_acc)
+
+
+all_curves %>% 
+	# filter(population == 14) %>% 
+	mutate(population = as.integer(population)) %>% 
+	ggplot(aes(x = temperature, y = growth, color = history)) + geom_line(size = 1) +
+	ylim(0, 4.3) + xlim(0, 50) +
+	facet_wrap( ~ population) + geom_hline(yintercept = 0) +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") +
+	scale_color_discrete(name = "Thermal history")
+
+ggsave("figures/acclimation_effect.pdf", width = 10, height = 8)
+
+
+
+
 
 growth_16 <- all_preds %>% 
 	spread(key = temperature, value = growth, 2:3) %>% 

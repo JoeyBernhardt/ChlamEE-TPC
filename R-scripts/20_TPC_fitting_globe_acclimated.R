@@ -6,15 +6,15 @@ library(nls.multstart)
 library(tidyverse)
 library(cowplot)
 
-rfu <- read_csv("data-processed/globe-chlamy-exponential-RFU-time.csv")
+rfu <- read_csv("data-processed/globe-acclimated-exponential.csv")
 
-rfu <- exponential 
+# rfu <- exponential 
 rfu2 <- rfu %>% 
 	rename(temp = temperature) %>% 
 	filter(!is.na(RFU)) 
 
 rfu2 %>% 
-	filter(population == 4) %>% 
+	filter(population == 6) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
 
 
@@ -183,8 +183,9 @@ all_preds %>%
 	# filter(population == 14) %>% 
 	mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
-	ylim(0, 3.5) + xlim(0, 50) + geom_hline(yintercept = 0) +
-	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
+	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
+	scale_color_discrete(name = "Population") + facet_wrap( ~ population)
 ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
 ggsave("figures/globe-chlamy-TPCs-acclimated.pdf", width = 12, height = 6)
 

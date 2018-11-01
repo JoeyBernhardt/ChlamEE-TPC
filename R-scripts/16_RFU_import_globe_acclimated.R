@@ -126,6 +126,7 @@ all4 <- all_rfus4 %>%
 								   TRUE ~ "no"))
 
 exponential <- all4 %>% 
+	mutate(exponential = ifelse(temperature == 22 & population %in% c(3, 4, 5, 6), "no", exponential)) %>% 
 	filter(exponential == "yes") 
 
 
