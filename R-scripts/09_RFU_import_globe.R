@@ -115,15 +115,33 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 	unite(col = well_plate, well, plate, remove =  FALSE) 
 
 
-all_rfus3 %>% 
-	dplyr::filter(temperature == 10) %>% 
+plot1 <- all_rfus3 %>% 
+	# dplyr::filter(temperature == 10) %>% 
 	# filter(days < 3) %>% 
 	# filter(population == 1) %>% 
-	ggplot(aes(x = days, y = RFU, color = factor(plate), group = well_plate)) +
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate, frame = days)) +
 	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
 	facet_wrap( ~ population, scales = "free") +
 	geom_line() 
 ggsave("figures/globe-chlamy-RFU-time-10C.pdf", width = 12, height = 10)
+
+
+plot2 <- all_rfus3 %>% 
+	filter(round == "repeat", population == 8) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate, frame = days, cumulative = TRUE)) +
+	geom_point(size = 2) + scale_color_viridis_d(name = "Temperature") + xlab("Days") +
+	geom_line() 
+
+library(gganimate)
+library(animation)
+ani.options(interval = 0.2, loop = 1)
+
+gganimate(plot2, interval = 0.2, filename = "figures/growth.gif", title_frame = FALSE,
+		  ani.width = 600, ani.height = 400, loop = FALSE)
+
+gganimate(plot1, interval = 0.5, filename = "figures/average_temp_time.gif",
+		  title_frame = FALSE, ani.width = 250, ani.height = 250)
+
 
 ### which parts are exponential
 
@@ -131,7 +149,7 @@ ggsave("figures/globe-chlamy-RFU-time-10C.pdf", width = 12, height = 10)
 all_rfus3 %>% 
 	filter(temperature !=20) %>% 
 	# filter(round == "repeat") %>% 
-	# filter(population == 1) %>% 
+	# filter(population == 12) %>% 
 	ggplot(aes(x = days, y = RFU, color = round, group = well_plate)) +
 	geom_point(size = 2) + scale_color_viridis_d(name = "Plate") + xlab("Days") +
 	facet_wrap( ~ population + temperature, scales = "free") +
@@ -146,8 +164,8 @@ all4 <- all_rfus3 %>%
 								   temperature == 28 & days < 1.75 ~ "yes",
 								   temperature == 22 & days < 2.5 ~ "yes",
 								   temperature == 16 & days < 3 ~ "yes",
-								   temperature == 10 & days < 20 ~ "yes",
-								   temperature == 40 & days < 7 ~ "yes",
+								   temperature == 10 & days < 20 & days > 2 ~ "yes",
+								   temperature == 40 & days > 2 & days < 7 ~ "yes",
 								   TRUE ~ "no"))
 
 exponential <- all4 %>% 

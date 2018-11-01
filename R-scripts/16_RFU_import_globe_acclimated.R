@@ -81,7 +81,10 @@ all_rfus3 <- all_rfus2 %>%
 
 all_rfus3 %>%
 	filter(!plate %in% c(37, 38, 39, 40)) %>% 
-	filter(temperature == 28) %>% 
+	# filter(round == "repeat") %>% 
+	# filter(temperature == 22) %>% 
+	# filter(population %in% c(1, 2, 5, 6)) %>% 
+	# filter(days < 0.3) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
 	scale_color_viridis_d(name = "Temperature") +
@@ -91,6 +94,21 @@ all_rfus3 %>%
 ggsave("figures/globe-chlamy-acclimated-RFU-time.pdf", width = 10, height = 8)
 
 
+
+all_rfus3 %>%
+	filter(!plate %in% c(37, 38, 39, 40)) %>% 
+	# filter(round == "repeat") %>% 
+	filter(temperature ==10) %>% 
+	# filter(population %in% c(1, 2, 5, 6)) %>% 
+	# filter(days < 0.3) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	geom_point(size = 2) +
+	scale_color_viridis_d(name = "Temperature") +
+	xlab("Days") +
+	facet_wrap( ~ population, scales = "free") +
+	geom_line() 
+
+
 all_rfus4 <- all_rfus3 %>%
 	filter(!plate %in% c(37, 38, 39, 40)) 
 
@@ -98,13 +116,17 @@ write_csv(all_rfus4, "data-processed/globe-chlamy-acclimated-RFU-time.csv")
 
 
 all4 <- all_rfus4 %>% 
-	mutate(exponential = case_when(temperature == 34 & days < 1.75 ~ "yes",
-								   temperature == 28 & days < 1.75 ~ "yes",
+	mutate(exponential = case_when(temperature == 34 & days < 1 ~ "yes",
+								   temperature == 28 & days < 1 ~ "yes",
 								   temperature == 22 & days < 2.5 ~ "yes",
-								   temperature == 16 & days < 3 ~ "yes",
-								   temperature == 10 & days < 20 ~ "yes",
-								   temperature == 40 & days < 7 ~ "yes",
+								   temperature == 16 & days < 7 ~ "yes",
+								   temperature == 10 & days < 20 & days > 1.5 ~ "yes",
+								   temperature == 40 & days < 7 & days > 1.5 ~ "yes",
+								   temperature == 22 & population %in% c(3, 4, 5, 6) ~ "no",
 								   TRUE ~ "no"))
 
 exponential <- all4 %>% 
-	filter(exponential == "yes")
+	filter(exponential == "yes") 
+
+
+write_csv(exponential, "data-processed/globe-acclimated-exponential.csv")

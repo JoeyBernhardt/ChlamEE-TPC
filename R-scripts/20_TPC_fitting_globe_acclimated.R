@@ -36,8 +36,8 @@ fit_growth <- function(df){
 					 control = nls.control(maxiter=1024, minFactor=1/204800000)))
 	if(class(res)!="try-error"){
 		out1 <- tidy(res) %>%  
-		select(estimate, term) %>%  
-		spread(key = term, value = estimate)
+			select(estimate, term) %>%  
+			spread(key = term, value = estimate)
 		out2 <- glance(res)
 	}
 	all <- bind_cols(out1, out2)
@@ -209,22 +209,22 @@ df <- rfu2 %>%
 df$RFU[[2]]
 
 fit1 <- nlsLM(RFU ~ mean(c(df$RFU[df$days ==0])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-				 data= df,  
-			start= list(z= 25,w= 25,a= 0.2, b= 0.07),
+			  data= df,  
+			  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
 			  lower = c(z = 0, w= 0, a = -0.2, b = 0),
 			  upper = c(z = 40, w= 80,a =  2, b = 2),
-				 control = nls.control(maxiter=1024, minFactor=1/204800000))
+			  control = nls.control(maxiter=1024, minFactor=1/204800000))
 
 
 fit_bootstrap <- function(df){
-bootnls <- df %>% 
-	bootstrap(100) %>% 
-	do(tidy(nlsLM(RFU ~ mean(c(.$RFU[1:28]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-	  data= .,  
-	  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
-	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
-	  upper = c(z = 40, w= 80,a =  2, b = 2),
-	  control = nls.control(maxiter=1024, minFactor=1/204800000))))
+	bootnls <- df %>% 
+		bootstrap(100) %>% 
+		do(tidy(nlsLM(RFU ~ mean(c(.$RFU[1:28]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
+					  data= .,  
+					  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
+					  lower = c(z = 0, w= 0, a = -0.2, b = 0),
+					  upper = c(z = 40, w= 80,a =  2, b = 2),
+					  control = nls.control(maxiter=1024, minFactor=1/204800000))))
 }
 
 
@@ -237,11 +237,11 @@ output_bs2 <- df_split %>%
 
 df3 <- df_split[[8]]
 fit3 <- nlsLM(RFU ~ mean(c(df3$RFU[days == 0]))  * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-	  data= df3,  
-	  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
-	  lower = c(z = 0, w= 0, a = -0.2, b = 0),
-	  upper = c(z = 40, w= 80,a =  2, b = 2),
-	  control = nls.control(maxiter=1024, minFactor=1/204800000))
+			  data= df3,  
+			  start= list(z= 25,w= 25,a= 0.2, b= 0.07),
+			  lower = c(z = 0, w= 0, a = -0.2, b = 0),
+			  upper = c(z = 40, w= 80,a =  2, b = 2),
+			  control = nls.control(maxiter=1024, minFactor=1/204800000))
 
 boot8 <- nlsBoot(fit3)
 
@@ -405,7 +405,7 @@ all_preds <- all_preds %>%
 
 p <- ggplot(data = data.frame(x = 0), mapping = aes(x = x))
 p +
-# geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 1)) + 
+	# geom_line(aes(x = temperature, y = growth), data = filter(all_preds, population == 1)) + 
 	# geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA),
 	# 			data = limits_c, fill = "orange", alpha = 0.5) +
 	geom_line(aes(x = temperature, y = growth, color = factor(population)), data = all_preds) +
@@ -428,20 +428,20 @@ p +
 	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA), data = limits_v, fill = "orange", alpha = 0.5) +
 	geom_ribbon(aes(x = temperature, ymin = q2.5, ymax = q97.5, linetype=NA), data = limits_c, fill = "cadetblue", alpha = 0.5) +
 	
-
-
-
-
-
-# other stuff -------------------------------------------------------------
+	
+	
+	
+	
+	
+	# other stuff -------------------------------------------------------------
 
 
 fitc1 <- nlsLM(RFU ~ 20 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-			  data= filter(rfu2, population == 9),  
-			  start=list(z= results$z[[1]],w= results$w[[1]],a= results$a[[1]], b= results$b[[1]]),
-			  lower = c(z = 0, w= 0, a = -0.2, b = 0),
-			  upper = c(z = 30, w= 80,a =  0.5, b = 0.15),
-			  control = nls.control(maxiter=1024, minFactor=1/204800000))
+			   data= filter(rfu2, population == 9),  
+			   start=list(z= results$z[[1]],w= results$w[[1]],a= results$a[[1]], b= results$b[[1]]),
+			   lower = c(z = 0, w= 0, a = -0.2, b = 0),
+			   upper = c(z = 30, w= 80,a =  0.5, b = 0.15),
+			   control = nls.control(maxiter=1024, minFactor=1/204800000))
 
 best_fit_c <- coef(fitc1)
 ctpc <- as_data_frame(best_fit_c) %>% 
@@ -517,7 +517,7 @@ p +
 	stat_function(fun = tpc_c10, color = "purple", size = 1) +
 	xlim(5, 45) + 
 	ylim(0, 2.5) + geom_hline(yintercept = 0) +
- ylab("Exponential growth rate") + xlab("Temperature (°C)") +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") +
 	# geom_line(aes(x = temperature, y = growth, group = replicate), color = "cadetblue", data = all_preds, alpha = 0.2) +
 	# geom_line(aes(x = temperature, y = growth, group = replicate), color = "purple", data = all_preds_v, alpha = 0.2) +
 	# geom_line(aes(x = temperature, y = growth, group = replicate), color = "orange", data = all_preds_NLA, alpha = 0.2) +
@@ -566,15 +566,15 @@ output2 <- rfu2 %>%
 data_sub <- df_split[[4]] %>% 
 	filter(round == "single")
 fit1 <- nls_multstart(RFU ~ 18 * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
-			  data = data_sub,
-			  iter = 500,
-			  start_lower = c(z= 25,w= 25,a= 0.0, b= 0.1),
-			  start_upper = c(z= 35,w= 35,a= 0.3, b= 0.2),
-			  supp_errors = 'N',
-			  na.action = na.omit,
-			  lower = c(z = 0, w= 0, a = -0.2, b = -2),
-			  upper = c(z = 40, w= 80,a =  1, b = 2),
-			  control = nls.control(maxiter=1000, minFactor=1/204800000))
+					  data = data_sub,
+					  iter = 500,
+					  start_lower = c(z= 25,w= 25,a= 0.0, b= 0.1),
+					  start_upper = c(z= 35,w= 35,a= 0.3, b= 0.2),
+					  supp_errors = 'N',
+					  na.action = na.omit,
+					  lower = c(z = 0, w= 0, a = -0.2, b = -2),
+					  upper = c(z = 40, w= 80,a =  1, b = 2),
+					  control = nls.control(maxiter=1000, minFactor=1/204800000))
 
 info <- output2 %>%
 	unnest(fit %>% map(glance))

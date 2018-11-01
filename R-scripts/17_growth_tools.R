@@ -57,7 +57,7 @@ pop8 <- all_rfus4 %>%
 
 gdat8 <- pop8 %>%
 	group_by(temperature) %>%
-	do(grs=get.growth.rate(x=.$days,y=.$ln.fluor,id=.$temperature,plot.best.Q=T,fpath=NA))
+	do(grs=get.growth.rate(x=.$days, y=.$ln.fluor,id=.$temperature,plot.best.Q=T,fpath=NA))
 
 pop8_growth <- gdat8 %>%
 	summarise(temperature,mu=grs$best.slope,
