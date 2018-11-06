@@ -10,7 +10,7 @@ rfu <- read_csv("data-processed/globe-chlamy-exponential-RFU-time.csv")
 
 rfu <- exponential 
 rfu2 <- rfu %>% 
-	rename(temp = temperature) %>% 
+	dplyr::rename(temp = temperature) %>% 
 	filter(!is.na(RFU)) 
 
 rfu2 %>% 
@@ -148,6 +148,7 @@ all_traits <- left_join(limits_all, output, by = "population")
 
 all_traits %>% 
 	filter(population != 7) %>% 
+	# filter(population %in% c(11, 3, 5)) %>% 
 	ggplot(aes(x = rmax, y = w)) + geom_point() +
 	geom_smooth(method = "lm", color = "purple") +ylab("Thermal breadth") + xlab("Maximum growth rate")
 ggsave("figures/generalist-specialist.pdf", width = 6, height = 4)
@@ -167,7 +168,7 @@ prediction_function <- function(df) {
 	
 	preds <- sapply(x, pred)
 	preds <- data.frame(x, preds) %>% 
-		rename(temperature = x, 
+		dplyr::rename(temperature = x, 
 			   growth = preds)
 }
 
@@ -180,12 +181,12 @@ all_preds <- bs_split %>%
 	map_df(prediction_function, .id = "population")
 
 all_preds %>% 
-	# filter(population == 14) %>% 
+	# filter(population %in% c(11, 3, 5)) %>% 
 	mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
 	ylim(0, 3.5) + xlim(0, 50) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + scale_color_discrete(name = "Population")
-ggsave("figures/globe-chlamy-TPCs.pdf", width = 12, height = 6)
+ggsave("figures/globe-chlamy-TPCs.pdf", width = 8, height = 4)
 ggsave("figures/globe-chlamy-TPCs-acclimated.pdf", width = 12, height = 6)
 
 all_preds_acclimated <- all_preds
