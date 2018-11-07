@@ -9,6 +9,7 @@ library(lubridate)
 # read in general data ----------------------------------------------------
 
 
+
 plate_layout <- read_excel("data-general/plate-layout-anc4-2018-09-26.xlsx") %>% 
 	select(-population)
 color_key <- read_excel("data-general/colour-key-anc4-2018-09-26.xlsx")
