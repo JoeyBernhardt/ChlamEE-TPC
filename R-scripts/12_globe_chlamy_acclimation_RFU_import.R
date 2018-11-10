@@ -14,7 +14,7 @@ plate_layout <- read_excel("data-general/globe-chlamy-acclimation-plate-setup.xl
 plate_key <- read_excel("data-general/globe-chlamy-acclimation-plate-key.xlsx") %>% 
 	mutate(temperature = ifelse(temperature == 20, 22, temperature))
 
-plate_info <- left_join(plate_key, plate_layout, by = "plate_key")
+plate_info <- left_join(plate_layout, plate_key, by = "plate_key")
 
 
 
