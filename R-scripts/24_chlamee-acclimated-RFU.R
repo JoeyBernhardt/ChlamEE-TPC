@@ -97,13 +97,16 @@ all_rfus3 <- all_rfus2 %>%
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	filter(temperature %in% c(34)) %>% 
+	filter(temperature %in% c(28)) %>%
+	# filter(days < 1.5) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
 	scale_color_viridis_d(name = "Temperature") +
 	xlab("Days") +
 	facet_wrap( ~ population, scales = "free_y") +
 	geom_line() 
-ggsave("figures/chlamee-acclimated-RFU-time.pdf", width = 30, height = 20)
+
+
+	ggsave("figures/chlamee-acclimated-RFU-time.pdf", width = 30, height = 20)
 ggsave("figures/chlamee-acclimated-RFU-time-34C.pdf", width = 14, height = 8)
 ggsave("figures/chlamee-acclimated-RFU-time-40C.pdf", width = 14, height = 8)
