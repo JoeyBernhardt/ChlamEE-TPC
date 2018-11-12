@@ -96,8 +96,8 @@ all_rfus3 <- all_rfus2 %>%
 
 
 all_rfus3 %>%
-	filter(round == "repeat") %>% 
-	filter(temperature %in% c(28, 34)) %>%
+	# filter(round == "repeat") %>% 
+	filter(temperature %in% c(40)) %>%
 	# filter(days < 1.2) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
