@@ -37,7 +37,7 @@ RFU_files <- RFU_files[grepl(".xlsx", RFU_files)]
 names(RFU_files) <- RFU_files %>% 
 	gsub(pattern = ".xlsx$", replacement = "")
 
-# RFU_files[grepl("83", RFU_files)]
+# RFU_files[grepl("104", RFU_files)]
 
 # RFU_files <- RFU_files[!grepl("acc", RFU_files)]
 
@@ -96,9 +96,9 @@ all_rfus3 <- all_rfus2 %>%
 
 
 all_rfus3 %>%
-	filter(round == "repeat") %>% 
-	# filter(temperature %in% c(34)) %>% 
-	# filter(days > 1.5) %>% 
+	# filter(round == "repeat") %>% 
+	# filter(temperature %in% c(16)) %>% 
+	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
 	scale_color_viridis_d(name = "Temperature") +
