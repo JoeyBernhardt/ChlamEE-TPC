@@ -95,9 +95,11 @@ all_rfus3 <- all_rfus2 %>%
 	unite(col = well_plate, well, plate, remove =  FALSE) 
 
 
+write_csv(all_rfus3, "data-processed/chlamee-acclimated-rfu-time.csv")
+
 all_rfus3 %>%
 	# filter(round == "repeat") %>% 
-	# filter(temperature %in% c(16)) %>% 
+	filter(temperature %in% c(22)) %>% 
 	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
@@ -105,6 +107,7 @@ all_rfus3 %>%
 	xlab("Days") +
 	facet_wrap( ~ population, scales = "free_y") +
 	geom_line() 
+
 
 ggsave("figures/chlamee-acclimated-RFU-time-exponential.pdf", width = 16, height = 12)
 ggsave("figures/chlamee-acclimated-RFU-time.pdf", width = 25, height = 12)

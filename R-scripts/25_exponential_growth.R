@@ -20,6 +20,7 @@ temp22 %>%
 	facet_wrap( ~ population)
 ggsave("figures/exp_growth22.pdf", width = 15, height = 8)
 
+
 growth_rates <- temp22 %>% 
 	group_by(population, well_plate) %>% 
 	do(tidy(nls(RFU ~ 10 * exp(r*days),
