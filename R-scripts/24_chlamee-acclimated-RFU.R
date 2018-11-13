@@ -88,7 +88,7 @@ all_rfus2 <- all_rfus_raw %>%
 	mutate(date_time = ymd_hms(date_time))
 
 all_rfus3 <- all_rfus2 %>% 
-	mutate(round = ifelse(plate %in% c(6, 13, 20, 27, 29, 36, 48, 55, 62, 69, 76, 83), "repeat", "single")) %>% 
+	mutate(round = ifelse(plate %in% c(90, 97, 104, 6, 13, 20, 27, 29, 36, 48, 55, 62, 69, 76, 83, 111, 118, 125), "repeat", "single")) %>% 
 	group_by(temperature) %>% 
 	mutate(start_time = min(date_time)) %>% 
 	mutate(days = interval(start_time, date_time)/ddays(1)) %>% 
@@ -99,7 +99,7 @@ write_csv(all_rfus3, "data-processed/chlamee-acclimated-rfu-time.csv")
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	# filter(temperature %in% c(34)) %>% 
+	filter(temperature %in% c(34)) %>% 
 	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
