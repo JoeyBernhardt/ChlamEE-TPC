@@ -1,7 +1,7 @@
 # ChlamEE-TPC
 
 
-This repo contains data and code for thermal performance curve experiments with *Chlamydomonas rheinhardtii* in the Narwani Lab at Eawag, Fall 2018.
+This repo contains data and code for thermal performance curve experiments with *Chlamydomonas reinhardtii* in the Narwani Lab at Eawag, Fall 2018.
 
 
 This is how it's organized:
