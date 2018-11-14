@@ -99,7 +99,7 @@ write_csv(all_rfus3, "data-processed/chlamee-acclimated-rfu-time.csv")
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	filter(temperature %in% c(34)) %>% 
+	filter(temperature %in% c(10)) %>% 
 	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
