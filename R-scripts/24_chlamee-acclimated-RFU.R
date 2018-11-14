@@ -97,6 +97,8 @@ all_rfus3 <- all_rfus2 %>%
 
 write_csv(all_rfus3, "data-processed/chlamee-acclimated-rfu-time.csv")
 
+unique(all_rfus3$temperature)
+
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
 	# filter(temperature %in% c(40)) %>% 
