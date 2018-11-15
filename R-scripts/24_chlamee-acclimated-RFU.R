@@ -101,7 +101,7 @@ unique(all_rfus3$temperature)
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	# filter(temperature %in% c(40)) %>% 
+	filter(temperature %in% c(10)) %>% 
 	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
@@ -120,3 +120,42 @@ ggsave("figures/chlamee-acclimated-RFU-time-34C.pdf", width = 14, height = 8)
 ggsave("figures/chlamee-acclimated-RFU-time-28C.pdf", width = 14, height = 8)
 ggsave("figures/chlamee-acclimated-RFU-time-22C.pdf", width = 14, height = 8)
 ggsave("figures/chlamee-acclimated-RFU-time-40C.pdf", width = 14, height = 8)
+
+
+# plot for comparison with R-star ---------------------------------------------
+population_key <- read_excel("data-general/ChlamEE_Treatments_JB.xlsx") %>% 
+	clean_names()
+
+temp22 <- all_rfus3 %>%
+	filter(round == "repeat") %>% 
+	filter(temperature %in% c(22)) 
+temp22_2 <- left_join(temp22, population_key, by = "population")
+
+
+temp22_2 %>% 
+	filter(population != "cc1629", RFU < 400) %>% 
+	mutate(treatment = ifelse(is.na(treatment), "none", treatment)) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	geom_point(size = 2) +
+	scale_color_viridis_d(name = "Temperature") +
+	xlab("Days") +
+	facet_wrap( ~ well_plate, scales = "free") +
+	# facet_grid(rows = vars(treatment), cols = vars(ancestor_id), scales = "free_y") +
+	geom_line()
+ggsave("figures/temp22_time_series_chlamee_TPC_facet_low_RFU.pdf", height = 30, width = 30)
+
+
+temp22_2 %>% 
+	filter(population != "cc1629") %>% 
+	mutate(treatment = ifelse(is.na(treatment), "none", treatment)) %>% 
+	mutate(day_int = round(days, digits = 0)) %>% 
+	group_by(well_plate, day_int) %>% 
+	sample_n(size = 1) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(well), group = well_plate)) +
+	geom_point(size = 2) +
+	scale_color_viridis_d(name = "Temperature") +
+	xlab("Days") +
+	facet_wrap( ~ well_plate, scales = "free") +
+	# facet_grid(rows = vars(treatment), cols = vars(ancestor_id), scales = "free_y") +
+	geom_line() + theme(legend.position = "none")
+ggsave("figures/temp22_time_series_chlamee_TPC_one_time_per_day_facet.pdf", height = 30, width = 30)
