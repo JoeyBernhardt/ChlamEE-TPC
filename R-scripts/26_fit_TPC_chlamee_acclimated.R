@@ -35,7 +35,6 @@ df <- rfu2 %>%
 df %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temp))) + geom_point()
 
-mean(c(df$RFU[df$days < 0.2]))
 
 fit_growth <- function(df){
 	res <- try(nlsLM(RFU ~  mean(c(df$RFU[df$days < 0.2])) * exp((a*exp(b*temp)*(1-((temp-z)/(w/2))^2))*(days)),
@@ -125,19 +124,38 @@ limits_all2 %>%
 	ylab("Topt (°C)") + xlab("Selection treatment")
 limits_all2 %>% 
 	filter(!is.na(treatment)) %>% 
+	ggplot(aes(x = treatment, y = rmax)) + geom_boxplot() +
+	ylab("rmax") + xlab("Selection treatment")
+
+limits_all2 %>% 
+	filter(!is.na(treatment)) %>%
+	ggplot(aes(x = treatment, y = rmax)) + geom_boxplot() +
+	ylab("rmax") + xlab("Selection treatment")
+
+limits_all2 %>% 
+	filter(!is.na(treatment)) %>% 
 	ggplot(aes(x = treatment, y = tmax)) + geom_boxplot() +
 	ylab("Tmax (°C)") + xlab("Selection treatment")
 
 limits_all2 %>% 
 	filter(!is.na(treatment)) %>% 
-	ggplot(aes(x = treatment, y = rmax)) + geom_boxplot() +
-	ylab("rmax") + xlab("Selection treatment") +
-	facet_wrap( ~ ancestor_id)
+	ggplot(aes(x = treatment, y = rmax, color = ancestor_id)) + geom_boxplot() +
+	ylab("rmax") + xlab("Selection treatment") 
+
+limits_all2 %>% 
+	filter(!is.na(treatment)) %>% 
+	ggplot(aes(x = ancestor_id, y = rmax, color = ancestor_id)) + geom_boxplot() +
+	ylab("rmax") + xlab("Selection treatment") 
 
 limits_all2 %>% 
 	filter(tmax > 38) %>% 
 	filter(!is.na(treatment)) %>% 
-	lm(topt ~ treatment, data = .) %>% summary()
+	lm(rmax ~ treatment, data = .) %>% summary()
+
+limits_all2 %>% 
+	filter(tmax > 38) %>% 
+	filter(!is.na(treatment)) %>% 
+	lm(rmax ~ ancestor_id, data = .) %>% summary()
 
 
 limits_all2 %>% 

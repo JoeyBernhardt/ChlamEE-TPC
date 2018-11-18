@@ -12,11 +12,12 @@ population_key <- read_excel("data-general/ChlamEE_Treatments_JB.xlsx") %>%
 rfu2 <- left_join(rfu, population_key, by = c("population"))
 
 temp22 <- rfu2 %>% 
-	filter(round == "repeat", temperature %in% c(22, 28, 34, 10, 40)) %>% 
+	filter(round == "repeat", temperature %in% c(22, 28, 34, 10, 40, 16)) %>% 
 	mutate(exponential = case_when(temperature == 28 & days < 1 ~ "yes",
 								   temperature == 34 & days < 1 ~ "yes",
 								   temperature == 22 & days < 2 ~  "yes",
 								   temperature == 10 & days < 15 ~  "yes",
+								   temperature == 16 & days < 3 ~  "yes",
 								   temperature == 40 & days < 15 & days > 1 ~  "yes",
 								   TRUE  ~ "no")) %>% 
 	group_by(temperature, population, well_plate) %>% 
@@ -30,9 +31,10 @@ unique(temp22$temperature)
 temp22 %>% 
 	# filter(temperature == 34, days < 1.2) %>%
 	filter(exponential == "yes") %>% 
-	ggplot(aes(x = days, y = RFU, color = temperature, group = well_plate)) + geom_point() +
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) + geom_point() +
 	geom_line() +
 	facet_wrap( ~ population, scales = "free")
+ggsave("figures/exp-growth-chlamee-acclimated.pdf", width = 15, height = 8)
 
 temp22 %>% 
 	ggplot(aes(x = days, y = RFU, color = treatment, group = well_plate)) + geom_point() +
@@ -59,7 +61,7 @@ growth_rates <- temp22 %>%
 growth2 <- left_join(growth_rates, population_key, by = "population")
 
 growth2 %>% 
-	filter(population != "cc1629", temperature == 28) %>% 
+	filter(population != "cc1629") %>% 
 	filter(!is.na(treatment)) %>% 
 	ggplot(aes(x = reorder(treatment, estimate), y = estimate, fill = treatment)) + geom_boxplot() +
 	ylab("Exponential growth rate (per day)") + xlab("Selection treatment") +
@@ -68,11 +70,17 @@ ggsave("figures/growth_at_22_pooled.pdf", width = 8, height = 6)
 
 
 growth2 %>% 
-	filter(population != "cc1629", treatment != "C") %>% 
+	filter(temperature == 22) %>% 
+	lm(estimate ~ ancestor_id + treatment, data = .) %>% summary()
+	tidy(., conf.int = TRUE) %>% View
+
+
+growth2 %>% 
+	filter(population != "cc1629") %>% 
 	filter(!is.na(treatment)) %>% 
 	ggplot(aes(x = reorder(treatment, estimate), y = estimate, fill = treatment)) + geom_boxplot() +
 	ylab("Exponential growth rate (per day)") + xlab("Selection treatment") +
-	facet_wrap( ~ temperature + ancestor_id, scales = "free")
+	facet_wrap( ~ temperature + treatment, scales = "free")
 
 growth2 %>% 
 	filter(population != "cc1629") %>% 
