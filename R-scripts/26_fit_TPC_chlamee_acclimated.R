@@ -76,7 +76,10 @@ get_topt <- function(df){
 output_split <- output %>% 
 	split(.$population)
 
-
+##using growthTools fit
+output_split <- read_csv("data-processed/chlamee-acclimated-tpc-fits.csv") %>% 
+	rename(z = s) %>% 
+	split(.$population)
 topts <- output_split %>% 
 	map_df(get_topt, .id = "population") 
 
@@ -212,13 +215,36 @@ prediction_function <- function(df) {
 			   growth = preds)
 }
 
+df <- output_split[[1]]
+prediction_nb <- function(df) {
+	tpc <-function(x){
+		res<- nbcurve2(x, df$topt[[1]], df$w[[1]], df$a[[1]], df$b[[1]])
+		res
+	}
+	
+	pred <- function(x) {
+		y <- tpc(x)
+	}
+	
+	x <- seq(0, 50, by = 0.1)
+	
+	preds <- sapply(x, tpc)
+	preds <- data.frame(x, preds) %>% 
+		rename(temperature = x, 
+			   growth = preds)
+}
+
+
 
 bs_split <- output %>% 
 	split(.$population)
 
+all_preds <- output_split %>% 
+	map_df(prediction_nb, .id = "population")
 
-all_preds <- bs_split %>% 
-	map_df(prediction_function, .id = "population")
+
+# all_preds <- bs_split %>% 
+	# map_df(prediction_function, .id = "population")
 
 
 all_preds2 <- left_join(all_preds, population_key, by = "population")
@@ -233,6 +259,13 @@ all_preds2 %>%
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
 	scale_color_discrete(name = "Treatment")  +
 	facet_wrap( ~ treatment)
+
+all_preds2 %>% 
+	group_by(population, treatment, ancestor_id) %>% 
+	summarise(rmax = max(growth)) %>% 
+	ggplot(aes(x = treatment, y = rmax)) + geom_boxplot()
+	lm(rmax ~ treatment+ancestor_id, data =.) %>% summary()
+
 
 all_preds2 %>% 
 	dplyr::filter(!is.na(population)) %>% 
