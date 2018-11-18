@@ -7,6 +7,9 @@ library(tidyverse)
 library(cowplot)
 library(rootSolve)
 library(forcats)
+library(growthTools)
+library(readxl)
+library(janitor)
 
 
 nbcurve<-function(temp,z,w,a,b){
@@ -236,8 +239,8 @@ prediction_nb <- function(df) {
 
 
 
-bs_split <- output %>% 
-	split(.$population)
+# bs_split <- output %>% 
+	# split(.$population)
 
 all_preds <- output_split %>% 
 	map_df(prediction_nb, .id = "population")
@@ -247,24 +250,49 @@ all_preds <- output_split %>%
 	# map_df(prediction_function, .id = "population")
 
 
-all_preds2 <- left_join(all_preds, population_key, by = "population")
+all_preds2 <- left_join(all_preds, population_key, by = "population") %>% 
+	mutate(treatment = ifelse(is.na(treatment), "none", treatment)) %>% 
+	filter(ancestor_id != "cc1629")
 
 all_preds2 %>% 
 	dplyr::filter(!is.na(population)) %>% 
 	dplyr::filter(!is.na(treatment)) %>% 
-	# filter(population == 14) %>% 
-	# mutate(population = as.integer(population)) %>% 
-	ggplot(aes(x = temperature, y = growth, color = ancestor_id, group = population)) + geom_line(size = 1) +
+	ggplot(aes(x = temperature, y = growth, color = treatment, group = population)) + geom_line(size = 1) +
 	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
 	scale_color_discrete(name = "Treatment")  +
-	facet_wrap( ~ treatment)
+	facet_wrap( ~ ancestor_id)
 
 all_preds2 %>% 
+	dplyr::filter(!is.na(population)) %>% 
+	dplyr::filter(!is.na(treatment)) %>% 
+	ggplot(aes(x = temperature, y = growth, color = ancestor_id, group = population)) + geom_line(size = 1) +
+	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
+	scale_color_discrete(name = "Ancestor")  +
+	facet_wrap( ~ treatment)
+
+rmax <- all_preds2 %>% 
 	group_by(population, treatment, ancestor_id) %>% 
 	summarise(rmax = max(growth)) %>% 
-	ggplot(aes(x = treatment, y = rmax)) + geom_boxplot()
-	lm(rmax ~ treatment+ancestor_id, data =.) %>% summary()
+	ungroup() %>% 
+	mutate(treatment = ifelse(is.na(treatment), "none", treatment))
+
+controls <- rmax %>% 
+	filter(ancestor_id %in% c("anc4", "anc5", "cc1690"))
+
+mod <- controls %>% 
+	mutate(evolved = ifelse(treatment %in% c("none", "C"), "no", "yes")) %>% 
+	filter(treatment %in% c("BS", "none", "C")) %>% 
+	lm(rmax ~ treatment, data = .)
+
+summary(mod)
+
+library(nlme)
+growth_mod <-lme(rmax ~ treatment, random= ~ treatment| ancestor_id, data= rmax)
+summary(growth_mod)
+anova(growth_mod)
+intervals(growth_mod)
 
 
 all_preds2 %>% 
