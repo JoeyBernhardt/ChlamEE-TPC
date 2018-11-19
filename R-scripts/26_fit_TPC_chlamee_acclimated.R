@@ -303,8 +303,8 @@ all_preds2 %>%
 	ggplot(aes(x = temperature, y = growth, color = treatment, group = population)) + geom_line(size = 1) +
 	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
-	geom_line(aes(x = temperature, y = growth), data = ancestors, color = "black", size = 2)+
-	scale_color_discrete(name = "Treatment") + facet_grid( ~ ancestor_id)
+	geom_line(aes(x = temperature, y = growth), data = ancestors, color = "black", size = 1.2)+
+	scale_color_discrete(name = "Treatment") + facet_grid( ~ ancestor_id) 
 ggsave("figures/ancestors_chlamee.pdf", width = 14, height = 3)
 
 
