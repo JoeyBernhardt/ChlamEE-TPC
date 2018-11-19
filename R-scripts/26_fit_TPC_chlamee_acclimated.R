@@ -295,12 +295,45 @@ anova(growth_mod)
 intervals(growth_mod)
 
 
+ancestors <- all_preds2 %>% 
+	filter(treatment %in% c("none"))
 all_preds2 %>% 
 	dplyr::filter(!is.na(population)) %>% 
 	dplyr::filter(!is.na(treatment)) %>% 
-	# filter(population == 14) %>% 
-	# mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = treatment, group = population)) + geom_line(size = 1) +
 	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
-	scale_color_discrete(name = "Treatment") 
+	geom_line(aes(x = temperature, y = growth), data = ancestors, color = "black", size = 2)+
+	scale_color_discrete(name = "Treatment") + facet_grid( ~ ancestor_id)
+ggsave("figures/ancestors_chlamee.pdf", width = 14, height = 3)
+
+
+anc4_controls <- all_preds2 %>% 
+	filter(ancestor_id == "anc4", treatment %in% c("none", "C"))
+all_preds2 %>% 
+	dplyr::filter(ancestor_id == "anc4") %>% 
+	ggplot(aes(x = temperature, y = growth, color = treatment, group = population)) + geom_line(size = 1) +
+	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
+	geom_line(aes(x = temperature, y = growth), data = anc4_controls, color = "black", size = 2)+
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
+	scale_color_discrete(name = "Ancestor") 
+ggsave("figures/ancestor4_chlamee.pdf", width = 8, height = 5)
+
+anc5_controls <- all_preds2 %>% 
+	filter(ancestor_id == "anc5", treatment %in% c("none", "C"))
+all_preds2 %>% 
+	dplyr::filter(ancestor_id == "anc5") %>% 
+	ggplot(aes(x = temperature, y = growth, color = treatment, group = population)) + geom_line(size = 1) +
+	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
+	geom_line(aes(x = temperature, y = growth), data = anc5_controls, color = "black", size = 2)+
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
+	scale_color_discrete(name = "Ancestor") 
+ggsave("figures/ancestor5_chlamee.pdf", width = 8, height = 5)
+
+all_preds2 %>% 
+	dplyr::filter(treatment == "none") %>% 
+	ggplot(aes(x = temperature, y = growth, color = ancestor_id, group = population)) + geom_line(size = 1) +
+	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +
+	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
+	scale_color_discrete(name = "Ancestor") 
+ggsave("figures/ancestors_only_chlamee.pdf", width = 8, height = 5)
