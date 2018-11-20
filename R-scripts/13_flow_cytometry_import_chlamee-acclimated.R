@@ -16,7 +16,7 @@ read_fcs <- function(file) {
 
 
 
-fcs_files_all <- c(list.files("flow-cytometry-data/chlamee-acclimated/",
+fcs_files_all <- c(list.files("flow-cytometry-data/chlamee-acclimated/50ul",
 							  full.names = TRUE, pattern = ".fcs$", recursive = TRUE))
 
 
@@ -32,4 +32,4 @@ all_fcs2_all <- all_fcs_all %>%
 	separate(plate_well, into = c("plate", "well"), sep = "/", remove = FALSE)
 
 
-write_csv(all_fcs2_all, "data-processed/chlamee-acclimated-particles.csv")
+write_csv(all_fcs2_all, "data-processed/chlamee-acclimated-particles-50ul.csv")
