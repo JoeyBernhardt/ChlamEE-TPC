@@ -27,7 +27,7 @@ plate_info <- left_join(plate_layout, plate_key, by = c("plate_key")) %>%
 	mutate(population = ifelse(population == "anc 2", "Anc 2", population))
 
 
-
+write_csv(plate_info, "data-processed/chlamee-acclimated-plate-info.csv")
 
 
 # read in RFU data --------------------------------------------------------
