@@ -1,14 +1,16 @@
 library(tidyverse)
 library(lubridate)
+library(cowplot)
 
 
 dilution_fcs <- read_csv("data-processed/dilution-test-low-density-particles.csv") 
+dilution_high <- read_csv("data-processed/dilution-test-high-density-particles.csv") 
 
 plate_info <- read_csv("data-processed/chlamee-acclimated-plate-info.csv")
 
 
 
-all_fcs3_all <- dilution_fcs %>% 
+all_fcs3_all <- dilution_high %>% 
 	select(3:10, concentration) %>% 
 	dplyr::filter(fl1_a > 5, fl3_a > 5) %>%
 	mutate(well = str_to_upper(well))
@@ -48,19 +50,21 @@ counts <- all_algae %>%
 
 rfu_low_density <- read_csv("data-processed/dilution-test-low-density-rfu.csv") %>% 
 	dplyr::filter(!grepl("01", well))
+rfu_high_density <- read_csv("data-processed/dilution-test-high-density-rfu.csv") %>% 
+	dplyr::filter(!grepl("01", well))
 
 
-all_counts_rfu <- left_join(counts, rfu_low_density, by = "well") %>% 
+all_counts_rfu <- left_join(counts, rfu_high_density, by = "well") %>% 
 	separate(col = well, into =c("row", "column"), remove = FALSE, sep = 1)
 
 
 all_counts_rfu %>% 
-	dplyr::filter(RFU < 100) %>% 
+	# dplyr::filter(RFU < 100) %>% 
 	mutate(scale_RFU = scale(RFU)) %>% 
 	mutate(scale_counts = scale(cells_per_ml)) %>% 
 	# dplyr::filter(population == 25) %>% 
 	ggplot(aes(x = RFU, y = cells_per_ml, color = column)) + geom_point() +
-	geom_smooth(method = "lm", color = "black") + facet_grid( ~ population) + scale_y_log10() + scale_x_log10()
+	geom_smooth(method = "lm", color = "black") + facet_grid( ~ population, scales = "free") 
 
 mod1 <- lm(RFU ~ cells_per_ml, data = all_counts_rfu)
 summary(mod1)
