@@ -4,7 +4,7 @@ library(cowplot)
 
 
 dilution_fcs <- read_csv("data-processed/dilution-test-low-density-particles.csv") 
-dilution_high <- read_csv("data-processed/dilution-test-high-density-particles.csv") 
+dilution_high <- read_csv("/Users/joeybernhardt/Documents/too-big-for-github/dilution-test-high-density-particles.csv") 
 
 plate_info <- read_csv("data-processed/chlamee-acclimated-plate-info.csv")
 
@@ -12,7 +12,7 @@ plate_info <- read_csv("data-processed/chlamee-acclimated-plate-info.csv")
 
 all_fcs3_all <- dilution_high %>% 
 	select(3:10, concentration) %>% 
-	dplyr::filter(fl1_a > 5, fl3_a > 5) %>%
+	dplyr::filter(fl1_a > 5, fl3_a > 5, fl4_a > 1) %>%
 	mutate(well = str_to_upper(well))
 
 
@@ -34,7 +34,7 @@ all_algae <- sorted_all %>%
 
 sorted_all %>% 
 	dplyr::filter(grepl("12", well)) %>% 
-	ggplot(aes(x = fl1_a, y = fl3_a, color = type)) + geom_point() +
+	ggplot(aes(x = fl3_a, y = fsc_a, color = type)) + geom_point() +
 	facet_wrap( ~ well) + scale_y_log10() + scale_x_log10()
 
 
