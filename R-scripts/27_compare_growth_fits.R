@@ -28,9 +28,14 @@ all_growth %>%
 ggsave("figures/chlamee-22C-growth-rate-comparison.pdf", width = 8, height = 6)
 
 all4 %>% 
-	# filter(days < 1) %>% 
-	ggplot(aes(x = days, y = log(cells_per_ml))) + geom_point() + 
-	facet_wrap( ~ population)  + geom_smooth(method = "lm")
+	filter(days < 1) %>% 
+	ggplot(aes(x = days, y = RFU)) + geom_point() + 
+	facet_wrap( ~ population, scales = "free") 
+
+all4 %>% 
+	filter(days < 1) %>% 
+	ggplot(aes(x = n, y = RFU)) + geom_point() 
+ggsave("figures/RFU-v-events-22C.pdf", width = 6, height = 4)
 
 all4 %>% 
 	# filter(days < 1) %>% 

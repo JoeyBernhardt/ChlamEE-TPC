@@ -140,7 +140,7 @@ rfu2 %>%
 	ggplot(aes(x = date_time, y = RFU)) + geom_point() + facet_wrap( ~ plate)
 
 
-all <- left_join(counts3, rfu2, by = c("plate", "well", "temperature"))
+all <- left_join(counts, rfu2, by = c("plate", "well", "temperature"))
 
 all2 <- bind_rows(all, all_inocs2) 
 
@@ -156,11 +156,18 @@ all %>%
 
 all %>% 
 	dplyr::filter(!is.na(population)) %>% 
-	dplyr:: filter(plate == 74) %>% 
-	dplyr::filter(date_time == ymd_hms("2018-11-13 13:31:49")) %>%
-	# filter(population == 4) %>% 
-	ggplot(aes(x = cells_per_ml, y = RFU, group = temperature, color = factor(temperature))) + geom_point() 
+	dplyr::filter(plate == 70, sample_volume == 50) %>% 
+	# dplyr::filter(date_time == ymd_hms("2018-11-13 13:31:49")) %>%
+	ggplot(aes(x = cells_per_ml, y = RFU, group = temperature, color = factor(temperature))) +
+	geom_point() 
 
+all %>% 
+	dplyr::filter(!is.na(population)) %>% 
+	dplyr::filter(plate == 70, sample_volume == 50) %>% 
+	# dplyr::filter(date_time == ymd_hms("2018-11-13 13:31:49")) %>%
+	ggplot(aes(x = cells_per_ml, y = RFU, group = sample_volume, color = factor(sample_volume))) +
+	geom_point() 
+ggsave("figures/sample_volume_rfu_v_counts.pdf", width = 10, height =6)
 
 all2 %>% 
 	ungroup() %>% 
