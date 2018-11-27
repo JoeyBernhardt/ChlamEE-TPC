@@ -94,7 +94,8 @@ unique(all_rfus3$temperature)
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	filter(temperature %in% c(34)) %>%
+	# filter(temperature %in% c(34), population %in% c(11, 19, 23, "anc5")) %>% 
+	filter(plate == 61) %>% 
 	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
