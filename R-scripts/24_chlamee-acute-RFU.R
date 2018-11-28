@@ -94,7 +94,21 @@ unique(all_rfus3$temperature)
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	filter(temperature %in% c(10)) %>% 
+	filter(temperature %in% c(16, 22)) %>% 
+	# filter(plate == 61) %>% 
+	# filter(days < 1) %>% 
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	geom_point(size = 2) +
+	scale_color_viridis_d(name = "Temperature") +
+	xlab("Days") +
+	facet_wrap( ~ population, scales = "free_y") +
+	geom_line() 
+
+ggsave("figures/chlamee-acute-rfu-time-repeats.pdf", width = 15, height = 10)
+
+all_rfus3 %>%
+	filter(round == "repeat") %>% 
+	filter(temperature %in% c(28)) %>% 
 	# filter(plate == 61) %>% 
 	# filter(population == 30) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
@@ -104,7 +118,6 @@ all_rfus3 %>%
 	facet_wrap( ~ population, scales = "free_y") +
 	geom_line() 
 
-ggsave("figures/chlamee-acute-rfu-time-repeats.pdf", width = 15, height = 10)
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
