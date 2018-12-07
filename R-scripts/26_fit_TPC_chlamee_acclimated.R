@@ -80,7 +80,7 @@ output_split <- output %>%
 	split(.$population)
 
 ##using growthTools fit
-output_split <- read_csv("data-processed/chlamee-acclimated-tpc-fits.csv") %>% 
+output_split <- read_csv("data-processed/chlamee-acute-tpc-fits.csv") %>% 
 	rename(z = s) %>% 
 	split(.$population)
 topts <- output_split %>% 

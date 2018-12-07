@@ -94,9 +94,9 @@ unique(all_rfus3$temperature)
 
 all_rfus3 %>%
 	filter(round == "repeat") %>% 
-	filter(temperature %in% c(16, 22)) %>% 
+	filter(temperature %in% c(10)) %>% 
 	# filter(plate == 61) %>% 
-	# filter(days < 1) %>% 
+	filter(days < 7.5) %>% 
 	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
 	geom_point(size = 2) +
 	scale_color_viridis_d(name = "Temperature") +
