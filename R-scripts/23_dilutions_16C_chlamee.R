@@ -48,11 +48,27 @@ all_rfu <- left_join(all_temp_RFU, plate_layout1, by = "well")  %>%
 
 # write_csv(all_rfu, "data-processed/RFU-globe-chlamy-setup-b-2018-10-10.csv")
 
+all_rfu <- read_excel("data-raw/chlamee-acute-dilution-RFU/Chlamee-R-star-dilutions.xlsx") %>% 
+	clean_names() %>% 
+	rename(RFU = mean_rfu_read_2_435_685)
+
 dilutions <- all_rfu %>% 
-	group_by(population) %>% 
+	# group_by(population) %>% 
+	mutate(RFU = as.numeric(RFU)) %>% 
+	group_by(chlam_ee, acclimation_level) %>% 
 	summarise(mean_rfu = mean(RFU)) %>% 
-	mutate(dilution_full = mean_rfu/11) %>% 
+	mutate(dilution_full = mean_rfu/10) %>% 
 	mutate(dilution2 = 1/dilution_full)
+
+dilutions %>% 
+	ggplot(aes(x = chlam_ee, y = mean_rfu, fill = acclimation_level)) + geom_bar(stat = "identity")
+
+high_conc1 <- dilutions %>% 
+	# filter(dilution2 > 0.15) %>% 
+	mutate(volume_needed = dilution2*20) %>% 
+	mutate(combo_needed = 20-volume_needed) %>% View
+	mutate(volume_needed = round(digits = 3, volume_needed)) %>% 
+	mutate(combo_needed = round(digits = 3, combo_needed)) %>%
 
 high_conc1 <- dilutions %>% 
 	# filter(dilution2 > 0.15) %>% 
