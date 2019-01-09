@@ -122,6 +122,35 @@ ggsave("figures/chlamee-acclimated-RFU-time-22C.pdf", width = 14, height = 8)
 ggsave("figures/chlamee-acclimated-RFU-time-40C.pdf", width = 14, height = 8)
 
 
+
+# single repeats exponential ----------------------------------------------
+
+single_exp <- all_rfus3 %>% 
+	filter(round == "single", temperature %in% c(22, 28, 34, 10, 40, 16)) %>% 
+	mutate(exponential = case_when(temperature == 28 & days < 1 ~ "yes",
+								   temperature == 34 & days < 1 ~ "yes",
+								   temperature == 22 & days < 2 ~  "yes",
+								   temperature == 10 & days < 7 ~  "yes",
+								   temperature == 16 & days < 5 ~  "yes",
+								   temperature == 40 & days < 7 & days > 1 ~  "yes",
+								   TRUE  ~ "no")) %>% 
+	filter(exponential == "yes")
+
+single_plate_list_acclimated <- single_exp %>%
+	filter(round == "single") %>% 
+	distinct(plate)
+write_csv(single_plate_list_acclimated, "data-processed/chlamee-acclimated-single-plate-exp.csv")
+
+
+single_exp %>%
+	ggplot(aes(x = days, y = RFU, color = factor(temperature), group = well_plate)) +
+	geom_point(size = 2) +
+	scale_color_viridis_d(name = "Temperature") +
+	xlab("Days") +
+	facet_wrap( ~ temperature, scales = "free_y") 
+ggsave("figures/single_exp_acclimated.pdf", width = 8, height = 6)	
+
+
 # plot for comparison with R-star ---------------------------------------------
 population_key <- read_excel("data-general/ChlamEE_Treatments_JB.xlsx") %>% 
 	clean_names()
