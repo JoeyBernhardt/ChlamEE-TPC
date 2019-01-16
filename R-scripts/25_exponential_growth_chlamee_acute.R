@@ -4,6 +4,7 @@ library(tidyverse)
 library(readxl)
 library(janitor)
 library(broom)
+library(cowplot)
 
 rfu <- read_csv("data-processed/chlamee-acute-rfu-time.csv")
 population_key <- read_excel("data-general/ChlamEE_Treatments_JB.xlsx") %>% 
@@ -104,6 +105,7 @@ clean.res <- res %>%
 
 write_csv(clean.res, "data-processed/chlamee-acute-tpc-fits.csv")
 
+clean.res <- read_csv("data-processed/chlamee-acute-tpc-fits.csv")
 
 clean.res %>% 
 	lm(topt ~ treatment, data = .) %>% summary()
@@ -118,5 +120,5 @@ anova(growth_mod)
 intervals(growth_mod)
 
 temps <- seq(0,40, 1)
-sapply(temps, nbcurve2(clean.res)
+tpcs <- sapply(temps, nbcurve2(clean.res))
 	   
