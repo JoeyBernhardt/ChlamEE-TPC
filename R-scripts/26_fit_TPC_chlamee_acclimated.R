@@ -84,7 +84,7 @@ output_split <- read_csv("data-processed/chlamee-acute-tpc-fits.csv") %>%
 	rename(z = s) %>% 
 	split(.$population)
 
-output_split_acc <- read_csv("data-processed/chlamee-acclimated-tpc-fits.csv") %>% 
+output_split_acc <- read_csv("data-processed/chlamee-acclimated-tpc-fits-2.csv") %>% 
 	rename(z = s) %>% 
 	split(.$population)
 
