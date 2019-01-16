@@ -83,6 +83,11 @@ output_split <- output %>%
 output_split <- read_csv("data-processed/chlamee-acute-tpc-fits.csv") %>% 
 	rename(z = s) %>% 
 	split(.$population)
+
+output_split_acc <- read_csv("data-processed/chlamee-acclimated-tpc-fits.csv") %>% 
+	rename(z = s) %>% 
+	split(.$population)
+
 topts <- output_split %>% 
 	map_df(get_topt, .id = "population") 
 
@@ -245,6 +250,8 @@ prediction_nb <- function(df) {
 all_preds <- output_split %>% 
 	map_df(prediction_nb, .id = "population")
 
+all_preds_acc <- output_split_acc %>% 
+	map_df(prediction_nb, .id = "population")
 
 # all_preds <- bs_split %>% 
 	# map_df(prediction_function, .id = "population")
@@ -253,6 +260,14 @@ all_preds <- output_split %>%
 all_preds2 <- left_join(all_preds, population_key, by = "population") %>% 
 	mutate(treatment = ifelse(is.na(treatment), "none", treatment)) %>% 
 	filter(ancestor_id != "cc1629")
+
+all_preds2_acc <- left_join(all_preds_acc, population_key, by = "population") %>% 
+	mutate(treatment = ifelse(is.na(treatment), "none", treatment)) %>% 
+	filter(ancestor_id != "cc1629")
+
+
+write_csv(all_preds2, "data-processed/chlamee-acute-tpc-curves.csv")
+write_csv(all_preds2_acc, "data-processed/chlamee-acclimated-tpc-curves.csv")
 
 all_preds2 %>% 
 	dplyr::filter(!is.na(population)) %>% 
