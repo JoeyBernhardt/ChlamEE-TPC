@@ -107,7 +107,7 @@ clean.res <- res %>%
 	summarise(population, treatment, ancestor_id,topt=tpcs$o,tmin=tpcs$tmin,tmax=tpcs$tmax,rsqr=tpcs$rsqr, 
 			  a = tpcs$a, b = tpcs$b, w = tpcs$w, s = tpcs$s)
 
-write_csv(clean.res, "data-processed/chlamee-acclimated-tpc-fits.csv")
+write_csv(clean.res, "data-processed/chlamee-acclimated-tpc-fits-2.csv")
 
 
 clean.res %>% 
