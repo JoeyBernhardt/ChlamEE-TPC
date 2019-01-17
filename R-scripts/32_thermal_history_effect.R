@@ -25,7 +25,7 @@ all_curves %>%
 	ylab("Exponential growth rate") + xlab("Temperature (°C)") + 
 	scale_color_viridis_d(name = "Thermal history", end =0.7, begin = 0.2)  +
 	facet_grid(treatment ~ ancestor_id)
-ggsave("figures/chlamee-thermal-history-effect.pdf", width = 15, height = 10)
+ggsave("figures/chlamee-thermal-history-effect.png", width = 15, height = 10)
 
 
 acute <- read_csv("data-processed/chlamee-acute-tpc-fits.csv") %>%
@@ -49,4 +49,12 @@ both_wide <- left_join(acute, acclimated, by = "population")
 both_wide %>%
 	ggplot(aes(x = topt.x, y = topt.y)) + geom_point() +
 	geom_abline(slope = 1, intercept = 0) + ylab("Topt acclimated") + xlab("Topt acute")
+ggsave("figures/topt-shift-acclimation.png", width = 8, height = 6)
 
+
+power_function <- function(x) 3*x^2
+power_function4 <- function(x) 8*x^2
+
+p <- ggplot(data = data.frame(x = 0), mapping = aes(x = x))
+p + stat_function(fun = power_function, color = "black", size = 1) + ylim(0, 10) + xlim(0, 10) +
+	stat_function(fun = power_function4, color = "red", size = 1)
