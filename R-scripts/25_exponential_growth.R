@@ -5,6 +5,8 @@ library(readxl)
 library(janitor)
 library(broom)
 
+theme_set(theme_cowplot())
+
 rfu <- read_csv("data-processed/chlamee-acclimated-rfu-time.csv")
 population_key <- read_excel("data-general/ChlamEE_Treatments_JB.xlsx") %>% 
 	clean_names()

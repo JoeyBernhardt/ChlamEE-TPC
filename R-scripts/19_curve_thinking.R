@@ -9,12 +9,12 @@ curves_globe <-read_csv("data-processed/all_preds_not_acclimated.csv") %>%
 	mutate(history = "not acclimated")
 curves_acc <- read_csv("data-processed/all_preds_acclimated.csv") %>% 
 	mutate(history = "acclimated")
-
+s
 all_curves <- bind_rows(curves_globe, curves_acc)
 
 
 all_curves %>% 
-	filter(history == "not acclimated", population %in% c(10, 1, 12, 13, 14)) %>% 
+	# filter(history == "not acclimated", population %in% c(10, 1, 12, 13, 14)) %>% 
 	mutate(population = as.integer(population)) %>% 
 	ggplot(aes(x = temperature, y = growth, color = factor(population))) + geom_line(size = 1) +
 	ylim(0, 4.3) + xlim(0, 50) + geom_hline(yintercept = 0) +

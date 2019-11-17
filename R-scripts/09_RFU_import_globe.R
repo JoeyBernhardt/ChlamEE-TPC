@@ -114,6 +114,7 @@ all_rfus3 <- bind_rows(all_rfus2, all_inocs) %>%
 	mutate(days = interval(start_time, date_time)/ddays(1)) %>% 
 	unite(col = well_plate, well, plate, remove =  FALSE) 
 
+write_csv(all_rfus3, "data-processed/globe-chlamy-acute-rfu-time.csv")
 
 plot1 <- all_rfus3 %>% 
 	# dplyr::filter(temperature == 10) %>% 
