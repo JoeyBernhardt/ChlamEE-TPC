@@ -109,7 +109,96 @@ all_traits %>%
 	ylim(0.6, 1.8) + xlim(0.6, 1.8)
 ggsave("figures/tpc-growth-P.png", width = 8, height = 6)
 
+all_traits %>% 
+	ggplot(aes(x = rstar, y = umax)) + geom_point() +
+	geom_smooth(method = "lm")
 
+
+
+# try the double exponential model ----------------------------------------
+
+phoshpate_data <- read_csv("data-processed/phosphate-exponential.csv") %>% 
+	mutate(temp = 20)
+
+rfu3 <- rfu2 %>% 
+	mutate(phosphate_concentration = 50)
+
+all_rfus <- bind_rows(phoshpate_data, rfu3) %>% 
+	select(population, treatment, RFU, temp, phosphate_concentration, days, N0) %>% 
+	group_by(population) %>% 
+	mutate(N0_mean = mean(N0))
+
+
+
+B1 <- 0.08
+B2 <- 0.09
+D0 <- 0
+D1 <- 5.952219e-06
+D2 <- 0.39
+
+fit_growth <- function(df){
+	res <- try(nlsLM(RFU ~  N0_mean * exp((b1*exp(b2*temp)*(phosphate_concentration/(phosphate_concentration + ks)) - (d0 + d1*exp(d2*temp)))*(days)),
+					 data= df,  
+					 start= list(b1= 0.08,b2= 0.09,ks= 0.2, d0= 0.0, d1 = 5.952219e-06, d2 = 0.39),
+					 lower = c(b1= 0.0,b2= 0.0,ks= 0, d0= 0.0, d1 = 5.952219e-06, d2 = 0),
+					 upper = c(b1= 3,b2= 1,ks= 30, d0= 1, d1 = 0.1, d2 = 1),
+					 control = nls.control(maxiter=1024, minFactor=1/204800000)))
+	if(class(res)!="try-error"){
+		out1 <- tidy(res) %>%  
+			select(estimate, term) %>%  
+			spread(key = term, value = estimate)
+		out2 <- glance(res)
+	}
+	all <- bind_cols(out1, out2)
+	all
+}
+
+all_split <- all_rfus %>% 
+	split(.$population)
+
+res <- all_split %>% 
+	map_df(fit_growth, .id = "population")
+
+res2 <- res %>% 
+	mutate(growth_50P_20C = (b1*exp(b2*20)*(50/(50 + ks)) - (d0 + d1*exp(d2*20)))) %>%
+	mutate(growth_50P_25C = (b1*exp(b2*25)*(50/(50 + ks)) - (d0 + d1*exp(d2*25)))) %>%
+	mutate(growth_50P_30C = (b1*exp(b2*30)*(50/(50 + ks)) - (d0 + d1*exp(d2*30)))) %>%
+	mutate(growth_50P_10C = (b1*exp(b2*10)*(50/(50 + ks)) - (d0 + d1*exp(d2*10)))) %>% 
+	mutate(growth_50P_15C = (b1*exp(b2*15)*(50/(50 + ks)) - (d0 + d1*exp(d2*15)))) %>% 
+	mutate(rstar_20 = ks*m/(growth_50P_20C-m)) %>% 
+	mutate(rstar_10 = ks*m/(growth_50P_10C-m)) %>% 
+	mutate(rstar_15 = ks*m/(growth_50P_15C-m)) %>% 
+	mutate(rstar_25 = ks*m/(growth_50P_25C-m)) %>% 
+	mutate(rstar_30 = ks*m/(growth_50P_30C-m)) %>% 
+	gather(contains("growth"), key = temperature, value = growth_rate) %>% 
+	mutate(temperature = str_replace(temperature, "growth_50P_", "")) %>% 
+	mutate(temperature = str_replace(temperature, "C", "")) %>% 
+	mutate(temperature = as.factor(temperature))
+
+res2 %>% 
+	filter(growth_rate > -5) %>% 
+	ggplot(aes(x = rstar, y = growth_rate, color = temperature, fill = temperature)) + geom_point() +
+	geom_smooth(method = "lm") +
+	facet_wrap( ~ temperature, scales = "free_y") + ylab("Growth rate (/day)") + xlab("P* at 20C")
+ggsave("figures/temp-dependent-gleaner.png", width = 8, height = 6)
+
+
+
+res_wide <- res %>% 
+	mutate(growth_50P_20C = (b1*exp(b2*20)*(50/(50 + ks)) - (d0 + d1*exp(d2*20)))) %>%
+	mutate(growth_50P_25C = (b1*exp(b2*25)*(50/(50 + ks)) - (d0 + d1*exp(d2*25)))) %>%
+	mutate(growth_50P_30C = (b1*exp(b2*30)*(50/(50 + ks)) - (d0 + d1*exp(d2*30)))) %>%
+	mutate(growth_50P_10C = (b1*exp(b2*10)*(50/(50 + ks)) - (d0 + d1*exp(d2*10)))) %>% 
+	mutate(growth_50P_15C = (b1*exp(b2*15)*(50/(50 + ks)) - (d0 + d1*exp(d2*15)))) %>% 
+	mutate(rstar_20 = ks*m/(growth_50P_20C-m)) %>% 
+	mutate(rstar_10 = ks*m/(growth_50P_10C-m)) %>% 
+	mutate(rstar_15 = ks*m/(growth_50P_15C-m)) %>% 
+	mutate(rstar_25 = ks*m/(growth_50P_25C-m)) %>% 
+	mutate(rstar_30 = ks*m/(growth_50P_30C-m))
+
+res_wide %>% 
+	filter(growth_50P_20C > -1) %>% 
+	ggplot(aes(x = rstar_20, y = growth_50P_20C)) + geom_point()
 
 
 # plot the fits -----------------------------------------------------------
